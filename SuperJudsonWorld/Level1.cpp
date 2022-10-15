@@ -28,6 +28,8 @@ void Level1::Init()
     backg = new Background(Color{ 1,1,1,1 });
     scene->Add(backg, STATIC);
 
+    //bg_teste = new Sprite("Resources/bg_teste.jpg");
+
     // adiciona jogador na cena
     scene->Add(SuperJudsonWorld::player, MOVING);
 
@@ -105,6 +107,7 @@ void Level1::Update()
 void Level1::Draw()
 {
     backg->Draw();
+    //bg_teste->Draw(window->CenterX(), window->CenterY());
     scene->Draw();
 
     if (SuperJudsonWorld::viewBBox)

@@ -7,9 +7,9 @@
 
 void Home::Init()
 {
-    backg = new Sprite("Resources/TitleScreen.png");
-    tileset = new TileSet("Resources/PressEnter.png", 72, 48, 1, 5);
-    anim = new Animation(tileset, 0.180f, true);
+    backg = new Sprite("Resources/Tela Inicial.png");
+    /*tileset = new TileSet("Resources/PressEnter.png", 72, 48, 1, 5);
+    anim = new Animation(tileset, 0.180f, true);*/
     SuperJudsonWorld::audio->Play(MENU, true);
 }
 
@@ -29,7 +29,7 @@ void Home::Update()
     }
     else
     {
-        anim->NextFrame();
+       // anim->NextFrame();
     }
 }
 
@@ -38,7 +38,7 @@ void Home::Update()
 void Home::Draw()
 {
     backg->Draw(window->CenterX(), window->CenterY(), Layer::BACK);
-    anim->Draw(545, 275);
+    //anim->Draw(545, 275);
 }
 
 // ------------------------------------------------------------------------------

@@ -7,7 +7,7 @@
 
 void GameOver::Init()
 {
-    title = new Sprite("Resources/GameOver.png");
+    title = new Sprite("Resources/Tela Game Over.png");
 }
 
 // ----------------------------------------------------------------------

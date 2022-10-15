@@ -15,6 +15,7 @@ class Level1 : public Game
 {
 private:
     Background* backg = nullptr;   // pano de fundo animado
+    //Sprite* bg_teste;
 
 public:
     static Scene* scene;           // cena do n�vel
