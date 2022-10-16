@@ -12,20 +12,11 @@
 class Background : public Object
 {
 private:
-    float xF, xB;                       // posição horizontal dos sprites
-    Image * imgF;                       // imagem de fundo frontal
-    Image * imgB;                       // imagem de fundo traseira    
+    Sprite * backg;                     // pano de fundo dinâmico (frontal 1)
 
-    Sprite * sky;                       // fundo estático
-    Sprite * backgF1;                   // pano de fundo dinâmico (frontal 1)
-    Sprite * backgF2;                   // pano de fundo dinâmico (frontal 2)
-    Sprite * backgB1;                   // pano de fundo dinâmico (traseiro 1)
-    Sprite * backgB2;                   // pano de fundo dinâmico (traseiro 2)
-
-    Color color;                        // cor do pano de fundo
 
 public:
-    Background(Color tint);             // construtor
+    Background(string path);            // construtor
     ~Background();                      // destrutor
 
     void Update();                      // atualização do objeto

@@ -2,43 +2,23 @@
 
 // ---------------------------------------------------------------------------------
 
-Background::Background(Color tint) : color(tint)
+Background::Background(string path)
 {
-    MoveTo(window->CenterX(), window->CenterY(), Layer::BACK);
-    xF = xB = x;
-
-    // carrega imagens
-    imgF = new Image("Resources/BackgFront.png");
-    imgB = new Image("Resources/BackgBack.png");
-
     // cria sprites do plano de fundo
-    sky     = new Sprite("Resources/Sky.png");    
-    backgF1 = new Sprite(imgF);
-    backgF2 = new Sprite(imgF);
-    backgB1 = new Sprite(imgB);
-    backgB2 = new Sprite(imgB);
+    backg = new Sprite(path);
 }
 
 // ---------------------------------------------------------------------------------
 
 Background::~Background()
 {
-    delete imgF;
-    delete imgB;    
-    delete backgF1;
-    delete backgF2;
-    delete backgB1;
-    delete backgB2;
-    delete sky;
+    delete backg;
 }
 
 // -------------------------------------------------------------------------------
 
 void Background::Update()
 {
-    // move sprites com velocidades diferentes
-    xF -= 200 * gameTime;
-    xB -= 150 * gameTime;
 }
 
 // -------------------------------------------------------------------------------
@@ -46,23 +26,7 @@ void Background::Update()
 void Background::Draw()
 {
     // desenha pano de fundo
-    sky->Draw(window->CenterX(), window->CenterY(), Layer::BACK, 1.0f, 0.0f, color);
-
-    // desenha pr�dios mais distantes
-    backgB1->Draw(xB, y, Layer::LOWER, 1.0f, 0.0f, color);
-    backgB2->Draw(xB + imgB->Width(), y, Layer::LOWER, 1.0f, 0.0f, color);
-    
-    // traz pano de fundo de volta para dentro da tela
-    if (xB + imgB->Width()/2.0f < 0)
-        xB += imgB->Width();
-
-    // desenha pr�dios mais pr�ximos
-    backgF1->Draw(xF, y, Layer::MIDDLE, 1.0f, 0.0f, color);
-    backgF2->Draw(xF + imgF->Width(), window->Height()/2.0f, Layer::MIDDLE, 1.0f, 0.0f, color);
-
-    // traz pano de fundo de volta para dentro da tela
-    if (xF + imgF->Width()/2.0f < 0)
-        xF += imgF->Width();
+    backg->Draw(window->CenterX(), window->CenterY(), Layer::BACK, 1.0f, 0.0f);
 }
 
 // -------------------------------------------------------------------------------

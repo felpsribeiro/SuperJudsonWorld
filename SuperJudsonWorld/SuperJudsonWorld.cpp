@@ -74,7 +74,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
     // configura o motor
     engine->window->Mode(WS_POPUP);
-    engine->window->Size(1500, 750);
+    engine->window->Size(1000, 500);
     engine->window->Color(30, 50, 80);
     engine->window->Title("Super Judson World");
     engine->window->Icon(IDI_ICON);

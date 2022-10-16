@@ -25,7 +25,7 @@ void Level1::Init()
     scene = new Scene();
 
     // pano de fundo do jogo
-    backg = new Background(Color{ 1,1,1,1 });
+    backg = new Background("Resources/Level1.png");
     scene->Add(backg, STATIC);
 
     //bg_teste = new Sprite("Resources/bg_teste.jpg");
@@ -34,45 +34,11 @@ void Level1::Init()
     scene->Add(SuperJudsonWorld::player, MOVING);
 
     // ----------------------
-    // plataformas
-    // ----------------------
-
-    Platform * plat;
-    float posX, posY;
-    uint  platType;
-    Color white { 1,1,1,1 };
-
-    ifstream fin;
-    fin.open("Level1.txt");
-
-    fin >> posX;
-    while (!fin.eof())
-    {
-        if (fin.good())
-        {
-            // l� linha com informa��es da plataforma
-            fin >> posY; fin >> platType;
-            plat = new Platform(posX, posY, platType, white);
-            scene->Add(plat, STATIC);
-        }
-        else
-        {
-            // ignora coment�rios
-            fin.clear();
-            char temp[80];
-            fin.getline(temp, 80);
-        }
-
-        fin >> posX;
-    }
-    fin.close();
-
-    // ----------------------
 
     // inicia com m�sica
-    SuperJudsonWorld::audio->Frequency(MUSIC, 0.94f);
-    SuperJudsonWorld::audio->Frequency(TRANSITION, 1.0f);
-    SuperJudsonWorld::audio->Play(MUSIC);
+    //SuperJudsonWorld::audio->Frequency(MUSIC, 0.94f);
+    //SuperJudsonWorld::audio->Frequency(TRANSITION, 1.0f);
+    //SuperJudsonWorld::audio->Play(MUSIC);
 }
 
 // ------------------------------------------------------------------------------
@@ -85,21 +51,21 @@ void Level1::Update()
         SuperJudsonWorld::NextLevel<Home>();
         SuperJudsonWorld::player->Reset();
     }
-    else if (SuperJudsonWorld::player->Bottom() < 0 || SuperJudsonWorld::player->Top() > window->Height())
-    {
-        SuperJudsonWorld::audio->Stop(MUSIC);
-        SuperJudsonWorld::NextLevel<GameOver>();
-        SuperJudsonWorld::player->Reset();
-    }
-    else if (SuperJudsonWorld::player->Level() == 1 || window->KeyPress('N'))
-    {
-        SuperJudsonWorld::NextLevel<Level2>();
-    }
-    else
-    {
-        scene->Update();
-        scene->CollisionDetection();
-    }    
+    //else if (SuperJudsonWorld::player->Bottom() < 0 || SuperJudsonWorld::player->Top() > window->Height())
+    //{
+    //    SuperJudsonWorld::audio->Stop(MUSIC);
+    //    SuperJudsonWorld::NextLevel<GameOver>();
+    //    SuperJudsonWorld::player->Reset();
+    //}
+    //else if (SuperJudsonWorld::player->Level() == 1 || window->KeyPress('N'))
+    //{
+    //    //SuperJudsonWorld::NextLevel<Level2>();
+    //}
+    //else
+    //{
+    //    scene->Update();
+    //    scene->CollisionDetection();
+    //}    
 }
 
 // ------------------------------------------------------------------------------

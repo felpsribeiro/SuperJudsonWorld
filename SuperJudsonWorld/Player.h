@@ -10,7 +10,7 @@
 
 // ------------------------------------------------------------------------------
 
-enum Gravity {NORMAL,INVERTED};         // tipo da gravidade
+enum Direct { LEFT, RIGHT };         // tipo da gravidade
 
 // ---------------------------------------------------------------------------------
 
@@ -19,8 +19,6 @@ class Player : public Object
 private:
     TileSet   * tileset;                // folha de sprites do personagem
     Animation * anim;                   // anima��o do personagem
-    uint        gravity;                // gravidade atuando sobre o jogador
-    int         level;                  // n�vel finalizado
     
 public:
     Player();                           // construtor
@@ -38,9 +36,6 @@ public:
 
 // ---------------------------------------------------------------------------------
 // Fun��o Membro Inline
-
-inline int Player::Level()
-{ return level; }
 
 inline float Player::Bottom()
 { return y + tileset->Height()/2; }
