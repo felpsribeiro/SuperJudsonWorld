@@ -13,6 +13,7 @@ using std::ifstream;
 using std::string;
 
 #include "Enemy.h"
+#include "Level2.h"
 
 // ------------------------------------------------------------------------------
 // Inicializa membros est�ticos da classe
@@ -93,9 +94,12 @@ void Level1::Update()
     if (window->KeyPress(VK_ESCAPE))
     {
         SuperJudsonWorld::audio->Stop(MUSIC);
-        SuperJudsonWorld::NextLevel<Home>();
         SuperJudsonWorld::player->Reset();
+        SuperJudsonWorld::NextLevel<Home>();
     }
+
+    if(window->KeyPress('N')) SuperJudsonWorld::NextLevel<Level2>();
+
     //else if (SuperJudsonWorld::player->Bottom() < 0 || SuperJudsonWorld::player->Top() > window->Height())
     //{
     //    SuperJudsonWorld::audio->Stop(MUSIC);

@@ -7,7 +7,7 @@ Platform::Platform(float posX, float posY, uint platType, Color tint) : color(ti
     switch (platType)
     {
         case RED:  platform = new Sprite("Resources/platform_1.png"); type = RED; break;
-        case GRAY: /*platform = new Sprite("Resources/platform_2.png");*/ type = GRAY; break;
+        case GRAY: platform = new Sprite("Resources/platform_2.png"); type = GRAY; break;
     }
     
     BBox(new Rect(-platform->Width()/2.0f, 

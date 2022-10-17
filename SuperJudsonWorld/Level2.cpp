@@ -1,115 +1,137 @@
-//#include "SuperJudsonWorld.h"
-//#include "Home.h"
-//#include "Level2.h"
-//#include "GameOver.h"
-//#include "Player.h"
-//#include "Platform.h"
-//#include "Background.h"
-//
-//#include <string>
-//#include <fstream>
-//using std::ifstream;
-//using std::string;
-//
-//// ------------------------------------------------------------------------------
-//// Inicializa membros est�ticos da classe
-//
-//Scene* Level2::scene = nullptr;
-//
-//// ------------------------------------------------------------------------------
-//
-//void Level2::Init()
-//{
-//    // cria gerenciador de cena
-//    scene = new Scene();
-//
-//    // pano de fundo do jogo
-//    Color dark{ 0.4f, 0.4f, 0.4f, 1.0f };
-//    backg = new Background(dark);
-//    scene->Add(backg, STATIC);
-//
-//    // adiciona jogador na cena
-//    scene->Add(SuperJudsonWorld::player, MOVING);
-//
-//    // ----------------------
-//    // plataformas
-//    // ----------------------
-//
-//    Platform* plat;
-//    float posX, posY;
-//    uint  platType;
-//
-//    ifstream fin;
-//    fin.open("Level2.txt");
-//
-//    fin >> posX;
-//    while (!fin.eof())
-//    {
-//        if (fin.good())
-//        {
-//            // l� linha com informa��es da plataforma
-//            fin >> posY; fin >> platType;
-//            plat = new Platform(posX, posY, platType, dark);
-//            scene->Add(plat, STATIC);
-//        }
-//        else
-//        {
-//            // ignora coment�rios
-//            fin.clear();
-//            char temp[80];
-//            fin.getline(temp, 80);
-//        }
-//
-//        fin >> posX;
-//    }
-//    fin.close();
-//
-//    // ----------------------
-//
-//    SuperJudsonWorld::audio->Frequency(MUSIC, 1.00f);
-//    SuperJudsonWorld::audio->Frequency(TRANSITION, 0.85f);
-//}
-//
-//// ------------------------------------------------------------------------------
-//
-//void Level2::Update()
-//{
-//    if (window->KeyPress(VK_ESCAPE) || SuperJudsonWorld::player->Level() == 2 || window->KeyPress('N'))
-//    {
-//        SuperJudsonWorld::audio->Stop(MUSIC);
-//        SuperJudsonWorld::NextLevel<Home>();
-//        SuperJudsonWorld::player->Reset();
-//    }
-//    else if (SuperJudsonWorld::player->Bottom() < 0 || SuperJudsonWorld::player->Top() > window->Height())
-//    {
-//        SuperJudsonWorld::audio->Stop(MUSIC);
-//        SuperJudsonWorld::NextLevel<GameOver>();
-//        SuperJudsonWorld::player->Reset();
-//    }
-//    else
-//    {
-//        scene->Update();
-//        scene->CollisionDetection();
-//    }
-//}
-//
-//// ------------------------------------------------------------------------------
-//
-//void Level2::Draw()
-//{
-//    backg->Draw();
-//    scene->Draw();
-//
-//    if (SuperJudsonWorld::viewBBox)
-//        scene->DrawBBox();
-//}
-//
-//// ------------------------------------------------------------------------------
-//
-//void Level2::Finalize()
-//{
-//    scene->Remove(SuperJudsonWorld::player, MOVING);
-//    delete scene;
-//}
-//
-//// ------------------------------------------------------------------------------
+#include "SuperJudsonWorld.h"
+#include "Home.h"
+#include "Level2.h"
+#include "Level2.h"
+#include "GameOver.h"
+#include "Player.h"
+#include "Platform.h"
+#include "Background.h"
+
+#include <string>
+#include <fstream>
+using std::ifstream;
+using std::string;
+
+#include "Enemy2.h"
+
+// ------------------------------------------------------------------------------
+// Inicializa membros est�ticos da classe
+
+Scene* Level2::scene = nullptr;
+
+// ------------------------------------------------------------------------------
+
+void Level2::Init()
+{
+    // cria gerenciador de cena
+    scene = new Scene();
+
+    // pano de fundo do jogo
+    backg = new Background("Resources/Level2.png");
+    scene->Add(backg, STATIC);
+
+
+    // adiciona jogador na cena
+    scene->Add(SuperJudsonWorld::player, MOVING);
+
+    Platform* plat;
+    Enemy2* en;
+    float posX, posY;
+    uint  platType;
+    Color white{ 1,1,1,1 };
+    int cont = 0;
+
+    ifstream fin;
+    fin.open("Level2.txt");
+
+    fin >> posX;
+    while (!fin.eof())
+    {
+        if (fin.good())
+        {
+            // l� linha com informa��es da plataforma
+            fin >> posY; fin >> platType;
+
+            plat = new Platform(posX, posY, platType, white);
+            scene->Add(plat, STATIC);
+
+            if (cont == 2 || cont == 3) {
+                float x = plat->X() - (plat->Width() * 0.25f) / 2;
+                float y = plat->Y() - (plat->Height() * 0.25f) / 2;
+
+                en = new Enemy2(x, y, plat);
+                scene->Add(en, MOVING);
+            }
+            cont++;
+        }
+        else
+        {
+            // ignora coment�rios
+            fin.clear();
+            char temp[80];
+            fin.getline(temp, 80);
+        }
+
+        fin >> posX;
+
+
+    }
+    fin.close();
+
+    // ----------------------
+
+    // inicia com m�sica
+    //SuperJudsonWorld::audio->Frequency(MUSIC, 0.94f);
+    //SuperJudsonWorld::audio->Frequency(TRANSITION, 1.0f);
+    //SuperJudsonWorld::audio->Play(MUSIC);
+}
+
+// ------------------------------------------------------------------------------
+
+void Level2::Update()
+{
+    if (window->KeyPress(VK_ESCAPE))
+    {
+        SuperJudsonWorld::audio->Stop(MUSIC);
+        SuperJudsonWorld::NextLevel<Home>();
+        SuperJudsonWorld::player->Reset();
+    }
+    //else if (SuperJudsonWorld::player->Bottom() < 0 || SuperJudsonWorld::player->Top() > window->Height())
+    //{
+    //    SuperJudsonWorld::audio->Stop(MUSIC);
+    //    SuperJudsonWorld::NextLevel<GameOver>();
+    //    SuperJudsonWorld::player->Reset();
+    //}
+    //else if (SuperJudsonWorld::player->Level() == 1 || window->KeyPress('N'))
+    //{
+    //    //SuperJudsonWorld::NextLevel<Level2>();
+    //}
+    else
+    {
+        scene->Update();
+        scene->CollisionDetection();
+    }
+}
+
+// ------------------------------------------------------------------------------
+
+void Level2::Draw()
+{
+    backg->Draw();
+    scene->Draw();
+
+    if (SuperJudsonWorld::viewBBox)
+        scene->DrawBBox();
+
+    SuperJudsonWorld::hud->Draw();
+}
+
+// ------------------------------------------------------------------------------
+
+void Level2::Finalize()
+{
+    scene->Remove(SuperJudsonWorld::player, MOVING);
+    delete scene;
+}
+
+// ------------------------------------------------------------------------------
