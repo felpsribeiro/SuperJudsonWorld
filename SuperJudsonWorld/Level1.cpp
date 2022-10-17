@@ -12,6 +12,8 @@
 using std::ifstream;
 using std::string;
 
+#include "Enemy.h"
+
 // ------------------------------------------------------------------------------
 // Inicializa membros est�ticos da classe
 
@@ -28,10 +30,43 @@ void Level1::Init()
     backg = new Background("Resources/Level1.png");
     scene->Add(backg, STATIC);
 
-    //bg_teste = new Sprite("Resources/bg_teste.jpg");
 
     // adiciona jogador na cena
     scene->Add(SuperJudsonWorld::player, MOVING);
+    
+    Platform* plat;
+    float posX, posY;
+    uint  platType;
+    Color white{ 1,1,1,1 };
+
+    ifstream fin;
+    fin.open("Level1.txt");
+
+    fin >> posX;
+    while (!fin.eof())
+    {
+        if (fin.good())
+        {
+            // l� linha com informa��es da plataforma
+            fin >> posY; fin >> platType;
+
+            plat = new Platform(posX, posY, platType, white);
+            scene->Add(plat, STATIC);
+        }
+        else
+        {
+            // ignora coment�rios
+            fin.clear();
+            char temp[80];
+            fin.getline(temp, 80);
+        }
+
+        fin >> posX;
+    }
+    fin.close();
+
+    Enemy* en = new Enemy(100.0f, 100.0f);
+    scene->Add(en, MOVING);
 
     // ----------------------
 
@@ -61,11 +96,11 @@ void Level1::Update()
     //{
     //    //SuperJudsonWorld::NextLevel<Level2>();
     //}
-    //else
-    //{
-    //    scene->Update();
-    //    scene->CollisionDetection();
-    //}    
+    else
+    {
+        scene->Update();
+        scene->CollisionDetection();
+    }    
 }
 
 // ------------------------------------------------------------------------------
@@ -73,7 +108,6 @@ void Level1::Update()
 void Level1::Draw()
 {
     backg->Draw();
-    //bg_teste->Draw(window->CenterX(), window->CenterY());
     scene->Draw();
 
     if (SuperJudsonWorld::viewBBox)

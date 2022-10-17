@@ -22,7 +22,7 @@ TileSet::TileSet(string filename, uint tileWidth, uint tileHeight, uint numCols,
     size(numTiles)
 {
     
-}
+} 
 
 // -------------------------------------------------------------------------------
 

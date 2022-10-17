@@ -6,10 +6,8 @@ Platform::Platform(float posX, float posY, uint platType, Color tint) : color(ti
 {
     switch (platType)
     {
-    case SMALL:  platform = new Sprite("Resources/SmallGray.png"); type = SMALL; break;
-    case MEDIUM: platform = new Sprite("Resources/MediumGray.png"); type = MEDIUM; break;
-    case LARGE:  platform = new Sprite("Resources/LongGray.png"); type = LARGE; break;
-    case FINISH: platform = new Sprite("Resources/Finish.png"); type = FINISH; break;
+        case RED:  platform = new Sprite("Resources/platform_1.png"); type = RED; break;
+        case GRAY: /*platform = new Sprite("Resources/platform_2.png");*/ type = GRAY; break;
     }
     
     BBox(new Rect(-platform->Width()/2.0f, 
@@ -32,7 +30,7 @@ Platform::~Platform()
 void Platform::Update()
 {
     // move plataforma apenas no eixo x
-    Translate(-200.0f * gameTime, 0);
+    //Translate(-200.0f * gameTime, 0);
 }
 
 // -------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
-#ifndef _PLAYER_H_
-#define _PLAYER_H_
+﻿#ifndef _ENEMY_H_
+#define _ENEMY_H_
 
 // ---------------------------------------------------------------------------------
 // Inclus�es
@@ -9,27 +9,26 @@
 #include "Animation.h"                  // anima��o de sprites
 
 // ------------------------------------------------------------------------------
-
-enum Direct { LEFT, RIGHT };         
+         
 
 // ---------------------------------------------------------------------------------
 
-class Player : public Object
+class Enemy : public Object
 {
 private:
-    TileSet   * tileset;                // folha de sprites do personagem
-    Animation * anim;                   // anima��o do personagem
-    
-public:
-    Player();                           // construtor
-    ~Player();                          // destrutor
+    TileSet* tileset;                // folha de sprites do personagem
+    Animation* anim;                   // anima��o do personagem
+    uint direction;
 
-    void Reset();                       // volta ao estado inicial
+public:
+    Enemy(float x_init, float y_init);                           // construtor
+    ~Enemy();                          // destrutor
+
     int Level();                        // �ltimo n�vel finalizado
     float Bottom();                     // coordenadas da base
     float Top();                        // coordenadas do topo
 
-    void OnCollision(Object * obj);     // resolu��o da colis�o
+    void OnCollision(Object* obj);     // resolu��o da colis�o
     void Update();                      // atualiza��o do objeto
     void Draw();                        // desenho do objeto
 };
@@ -37,14 +36,20 @@ public:
 // ---------------------------------------------------------------------------------
 // Fun��o Membro Inline
 
-inline float Player::Bottom()
-{ return y + tileset->Height()/2; }
+inline float Enemy::Bottom()
+{
+    return y + tileset->Height() / 2;
+}
 
-inline float Player::Top()
-{ return y - tileset->Height()/2; }
+inline float Enemy::Top()
+{
+    return y - tileset->Height() / 2;
+}
 
-inline void Player::Draw()
-{ anim->Draw(x, y, z); }
+inline void Enemy::Draw()
+{
+    anim->Draw(x, y, z);
+}
 
 // ---------------------------------------------------------------------------------
 
