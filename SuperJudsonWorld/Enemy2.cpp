@@ -4,10 +4,9 @@
 
 // ---------------------------------------------------------------------------------
 
-Enemy2::Enemy2(float x_init, float y_init, Platform* plat)
+Enemy2::Enemy2(float x_init, float y_init)
 {
     tileset = new TileSet("Resources/enemy_2.png", 44, 62, 2, 4);
-    platform = plat;
 
     uint left[2] = { 0, 1 };
     uint right[2] = { 2, 3 };
@@ -43,31 +42,41 @@ Enemy2::~Enemy2()
 
 void Enemy2::OnCollision(Object* obj)
 {
+    if (obj->Type() == GRAY) {
+        Platform* plat = (Platform*) obj;
+        Rect* p = (Rect*) plat->BBox();
 
+        Rect* e = (Rect*) BBox();
+        
+        if(e->Left() < p->Right() && e->Right() > p->Left() && e->Top() < p->Top())
+            // mant�m personagem em cima da plataforma
+            MoveTo(X(), plat->Y() - (plat->Height() * 0.25f) / 2);
+    }
 }
 
 // ---------------------------------------------------------------------------------
 
 void Enemy2::Update()
 {
-    float width = platform->Width() * 0.25f;
-    float plat_x = platform->X();
-
-    if (X() + 23 > plat_x + width / 2) {
-        MoveTo(plat_x + width / 2 - 23, Y());
+    if (X() + 23 > window->Width()) {
+        MoveTo(window->Width() - 23, Y());
         direction = LEFT;
     }
-    else if (X() - 23 < plat_x - width / 2) {
-        MoveTo(plat_x - width / 2 + 23, Y());
+    else if (X() - 23 < 0) {
+        MoveTo(23, Y());
         direction = RIGHT;
     }
 
+    if (Y() + 31 > 472.0f) {
+        MoveTo(X(), 472.0f - 31);
+    }
+
     if (direction == RIGHT) {
-        Translate(70 * gameTime, 0);
+        Translate(100 * gameTime, 200 * gameTime);
         anim->Select(RIGHT);
     }
     else {
-        Translate(-70 * gameTime, 0);
+        Translate(-100 * gameTime, 200 * gameTime);
         anim->Select(LEFT);
     }
 

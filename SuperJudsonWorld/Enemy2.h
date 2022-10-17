@@ -23,7 +23,7 @@ private:
     Platform* platform;
 
 public:
-    Enemy2(float x_init, float y_init, Platform* plat);  // construtor
+    Enemy2(float x_init, float y_init);  // construtor
     ~Enemy2();                          // destrutor
 
     int Level();                        // �ltimo n�vel finalizado

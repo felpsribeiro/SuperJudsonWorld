@@ -59,7 +59,7 @@ void Level2::Init()
                 float x = plat->X() - (plat->Width() * 0.25f) / 2;
                 float y = plat->Y() - (plat->Height() * 0.25f) / 2;
 
-                en = new Enemy2(x, y, plat);
+                en = new Enemy2(x, y);
                 scene->Add(en, MOVING);
             }
             cont++;
