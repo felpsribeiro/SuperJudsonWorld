@@ -27,6 +27,8 @@ public:
 
     void Update();                          // atualiza��o do objeto
     void Draw();                            // desenho do objeto
+    float Width();
+    float Height();
 }; 
 
 // ---------------------------------------------------------------------------------
@@ -34,6 +36,14 @@ public:
 
 inline void Platform::Draw()
 { platform->Draw(x, y, z, 0.25f, 0.0f, color); }
+
+inline float Platform::Width() {
+   return platform->Width();
+}
+
+inline float Platform::Height() {
+   return platform->Height();
+}
 
 // ---------------------------------------------------------------------------------
 

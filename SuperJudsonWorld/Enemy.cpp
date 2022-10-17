@@ -1,11 +1,13 @@
 ﻿#include "Enemy.h"
 #include "SuperJudsonWorld.h"
 
+
 // ---------------------------------------------------------------------------------
 
-Enemy::Enemy(float x_init, float y_init)
+Enemy::Enemy(float x_init, float y_init, Platform* plat)
 {
-    tileset = new TileSet("Resources/enemy_1.png", 31.59, 30.49, 3, 6); 
+    tileset = new TileSet("Resources/enemy_1.png", 34, 32, 3, 6); 
+    platform = plat;
 
     uint left[3] = { 0,1,2 };
     uint right[3] = { 3,4,5 };
@@ -48,21 +50,24 @@ void Enemy::OnCollision(Object* obj)
 
 void Enemy::Update()
 {
-    if (X() + 23 > window->Width()) {
-        MoveTo(window->Width() - 23, Y());
+    float width = platform->Width() * 0.25f;
+    float plat_x = platform->X();
+
+    if (X() + 23 > plat_x + width / 2) {
+        MoveTo(plat_x + width / 2 - 23, Y());
         direction = LEFT;
     }
-    else if (X() - 23 < 0) {
-        MoveTo(23, Y());
+    else if (X() - 23 < plat_x - width / 2) {
+        MoveTo(plat_x - width / 2 + 23, Y());
         direction = RIGHT;
     }
 
     if (direction == RIGHT) {
-        Translate(200 * gameTime, 0);
+        Translate(70 * gameTime, 0);
         anim->Select(RIGHT);
     }
     else {
-        Translate(-200 * gameTime, 0);
+        Translate(-70 * gameTime, 0);
         anim->Select(LEFT);
     }
 
