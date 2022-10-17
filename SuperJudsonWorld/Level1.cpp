@@ -122,6 +122,8 @@ void Level1::Draw()
 
     if (SuperJudsonWorld::viewBBox)
         scene->DrawBBox();
+
+    SuperJudsonWorld::hud->Draw();
 }
 
 // ------------------------------------------------------------------------------

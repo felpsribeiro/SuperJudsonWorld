@@ -161,6 +161,7 @@
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="Hud.cpp" />
     <ClCompile Include="SuperJudsonWorld.cpp" />
     <ClCompile Include="Home.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="GameOver.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="Hud.h" />
     <ClInclude Include="SuperJudsonWorld.h" />
     <ClInclude Include="Home.h" />
     <ClInclude Include="Image.h" />
