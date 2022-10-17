@@ -10,10 +10,10 @@ Platform::Platform(float posX, float posY, uint platType, Color tint) : color(ti
         case GRAY: platform = new Sprite("Resources/platform_2.png"); type = GRAY; break;
     }
     
-    BBox(new Rect(-platform->Width()/2.0f, 
-                  -platform->Height()/2.0f, 
-                   platform->Width()/2.0f, 
-                   platform->Height()/2.0f));
+    BBox(new Rect(-(platform->Width() * 0.25f) / 2.0f,
+                  -(platform->Height() * 0.25f) / 2.0f,
+                   (platform->Width() * 0.25f) / 2.0f,
+                   (platform->Height() * 0.25f) / 2.0f));
 
     MoveTo(posX, posY, Layer::MIDDLE);
 }
