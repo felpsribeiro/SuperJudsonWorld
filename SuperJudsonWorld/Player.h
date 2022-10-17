@@ -10,7 +10,8 @@
 
 // ------------------------------------------------------------------------------
 
-enum Direct { LEFT, RIGHT };         
+enum State { LEFT_W, LEFT_J, LEFT_S, RIGHT_W, RIGHT_J, RIGHT_S };
+enum Direction { UP, DOWN, STOP };
 
 // ---------------------------------------------------------------------------------
 
@@ -19,13 +20,16 @@ class Player : public Object
 private:
     TileSet   * tileset;                // folha de sprites do personagem
     Animation * anim;                   // anima��o do personagem
-    
+    State       state = RIGHT_S;
+    float       speed = 300.0f;
+    const float gravit = 0.5f;
+    uint        direction = STOP;
+
 public:
     Player();                           // construtor
     ~Player();                          // destrutor
 
     void Reset();                       // volta ao estado inicial
-    int Level();                        // �ltimo n�vel finalizado
     float Bottom();                     // coordenadas da base
     float Top();                        // coordenadas do topo
 

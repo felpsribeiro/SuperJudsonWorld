@@ -7,14 +7,22 @@
 Player::Player()
 {
     tileset = new TileSet("Resources/Player.png", 50, 80, 3, 6);
-    anim = new Animation(tileset, 0.120f, false);
+    anim = new Animation(tileset, 0.120f, true);
 
     // sequ�ncias de anima��o do player
-    uint left[3]  = {0,1,2};
-    uint right[3] = {3,4,5};
-
-    anim->Add(LEFT, left, 3);
-    anim->Add(RIGHT, right, 3);
+    uint walkerLeft[2]  = { 0, 1 };
+    uint jumpLeft[2]    = { 0, 3 };
+    uint stillLeft[1]   = { 0 };
+    uint walkerRight[2] = { 3, 4 };
+    uint jumpRight[2]   = { 3, 5 };
+    uint stillRight[1]  = { 3 };
+    
+    anim->Add(LEFT_W, walkerLeft, 2);
+    anim->Add(LEFT_J, jumpLeft, 2);
+    anim->Add(LEFT_S, stillLeft, 1);
+    anim->Add(RIGHT_W, walkerRight, 2);
+    anim->Add(RIGHT_J, jumpRight, 2);
+    anim->Add(RIGHT_S, stillRight, 1);
 
     // cria bounding box
     BBox(new Rect(
@@ -23,8 +31,9 @@ Player::Player()
         tileset->TileWidth() / 2.0f,
         tileset->TileHeight() / 2.0f));
 
-    // posi��o inicial
+    // posição inicial
     MoveTo(49.0f, 432.0f, Layer::FRONT);
+    anim->Select(RIGHT_S);
 }
 
 // ---------------------------------------------------------------------------------
@@ -89,15 +98,70 @@ void Player::OnCollision(Object * obj)
 
 void Player::Update()
 {
-    //// a��o da gravidade sobre o personagem
-    //if (gravity == NORMAL)    
-    //    Translate(0, 300 * gameTime);
-    //else
-    //    Translate(0, -300 * gameTime);
+    if (window->KeyPress(VK_SPACE) && direction == STOP)
+    {
+        direction = UP;
+    }
+    else if (window->KeyDown(VK_LEFT))
+    {
+        state = LEFT_W;
+        Translate(-speed * gameTime, 0);
+    } 
+    else if (window->KeyDown(VK_RIGHT))
+    {
+        state = RIGHT_W;
+        Translate(speed * gameTime, 0);
+    }
+    else if (window->KeyUp(VK_RIGHT) && window->KeyUp(VK_LEFT) || window->KeyDown(VK_RIGHT) && window->KeyDown(VK_LEFT))
+    {
+        switch (state)
+        {
+        case LEFT_W:
+        case LEFT_J:
+        case LEFT_S:
+        {
+            state = LEFT_S;
+            break;
+        }
+        case RIGHT_W:
+        case RIGHT_J:
+        case RIGHT_S:
+        {
+            state = RIGHT_S;
+            break;
+        }
+        }
+    }
 
-    //// atualiza anima��o
-    anim->Select(RIGHT);
-    //anim->NextFrame();
+    // atualiza animação
+    anim->Select(state);
+    anim->NextFrame();
+
+    // mantém personagem dentro da tela
+    if (x + tileset->TileWidth() / 2.0f > window->Width())
+        MoveTo(window->Width() - tileset->TileWidth() / 2.0f, y);
+
+    if (x - tileset->TileWidth() / 2.0f < 0)
+        MoveTo(tileset->TileWidth() / 2.0f, y);
+
+    // controla a gravidade do personagem
+    if (direction == UP)
+    {
+        if (speed > 0.0f)
+        {
+            speed -= gravit;
+            Translate(0, -speed * gameTime);
+        }
+        else
+        {
+            direction = DOWN;
+        }
+    } 
+    else if (direction == DOWN)
+    {
+        speed += gravit;
+        Translate(0, speed * gameTime);
+    }
 }
 
 // ---------------------------------------------------------------------------------

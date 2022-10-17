@@ -65,8 +65,8 @@ void Level1::Init()
     }
     fin.close();
 
-    Enemy* en = new Enemy(100.0f, 100.0f);
-    scene->Add(en, MOVING);
+    //Enemy* en = new Enemy(100.0f, 100.0f);
+    //scene->Add(en, MOVING);
 
     // ----------------------
 
@@ -82,9 +82,11 @@ void Level1::Update()
 {
     if (window->KeyPress(VK_ESCAPE))
     {
-        SuperJudsonWorld::audio->Stop(MUSIC);
+        /*SuperJudsonWorld::audio->Stop(MUSIC);
         SuperJudsonWorld::NextLevel<Home>();
-        SuperJudsonWorld::player->Reset();
+        SuperJudsonWorld::player->Reset();*/
+
+        window->Close();
     }
     //else if (SuperJudsonWorld::player->Bottom() < 0 || SuperJudsonWorld::player->Top() > window->Height())
     //{
