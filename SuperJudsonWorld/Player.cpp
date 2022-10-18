@@ -59,6 +59,8 @@ void Player::Reset()
 
 void Player::OnCollision(Object * obj)
 {
+    Rect* player = (Rect*)BBox();
+
     if (obj->Type() == COIN) {
         if (SuperJudsonWorld::n_level == 1) 
             Level1::scene->Delete(obj, STATIC);
@@ -70,7 +72,6 @@ void Player::OnCollision(Object * obj)
         //de frente - morre
 
         Rect* enemy = (Rect*)obj->BBox();
-        Rect* player = (Rect*)BBox();
 
         if (enemy->Left() > player->Left() && enemy->Right() < player->Right() && 
             player->Bottom() > enemy->Top() && player->Bottom() < enemy->Bottom()) {
@@ -80,6 +81,14 @@ void Player::OnCollision(Object * obj)
         else {
             SuperJudsonWorld::lost = true;
         }
+    }
+    else if (obj->Type() == PLAT_RED || obj->Type() == PLAT_GRAY) {
+        Platform* plat = (Platform*)obj;
+        Rect* platform = (Rect*)obj->BBox();
+
+        if (player->Left() < platform->Right() && player->Right() > platform->Left() && player->Top() < platform->Top())
+            // mant�m personagem em cima da plataforma
+            MoveTo(X(), plat->Y() - (plat->Height() * 0.25f) / 2);
     }
 }
 
