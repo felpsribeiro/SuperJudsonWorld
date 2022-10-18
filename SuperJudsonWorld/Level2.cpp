@@ -13,6 +13,7 @@ using std::ifstream;
 using std::string;
 
 #include "Enemy2.h"
+#include "Coin.h"
 
 // ------------------------------------------------------------------------------
 // Inicializa membros est�ticos da classe
@@ -40,6 +41,7 @@ void Level2::Init()
     uint  platType;
     Color white{ 1,1,1,1 };
     int cont = 0;
+    Coin* coin;
 
     ifstream fin;
     fin.open("Level2.txt");
@@ -61,6 +63,9 @@ void Level2::Init()
 
                 en = new Enemy2(x, y);
                 scene->Add(en, MOVING);
+
+                coin = new Coin(plat->X(), plat->Y() - 50);
+                scene->Add(coin, STATIC);
             }
             cont++;
         }
@@ -74,7 +79,8 @@ void Level2::Init()
 
         fin >> posX;
 
-
+        coin = new Coin(500, 432);
+        scene->Add(coin, STATIC);
     }
     fin.close();
 
