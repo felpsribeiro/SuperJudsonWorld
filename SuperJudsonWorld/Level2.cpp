@@ -104,6 +104,7 @@ void Level2::Update()
         SuperJudsonWorld::audio->Stop(MUSIC);
         SuperJudsonWorld::NextLevel<Home>();
         SuperJudsonWorld::player->Reset();
+        SuperJudsonWorld::pontos = 0;
     }
     //else if (SuperJudsonWorld::player->Bottom() < 0 || SuperJudsonWorld::player->Top() > window->Height())
     //{

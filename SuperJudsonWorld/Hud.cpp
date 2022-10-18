@@ -5,7 +5,7 @@ Hud::Hud() {
 	fonte = new Font("Resources/Agency30.png");
 	fonte->Spacing("Resources/Agency30.dat");
 
-	time = 10;
+	time = 100;
 
 	timer.Start();
 }

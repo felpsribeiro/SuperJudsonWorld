@@ -6,7 +6,7 @@
 
 Enemy2::Enemy2(float x_init, float y_init)
 {
-    type = ENEMY;
+    type = ENEMY2;
 
     tileset = new TileSet("Resources/enemy_2.png", 44, 62, 2, 4);
 

@@ -8,7 +8,6 @@
 
 Player::Player()
 {
-    type = PLAYER;
 
     tileset = new TileSet("Resources/Player.png", 50, 80, 3, 6);
     anim = new Animation(tileset, 0.120f, true);
@@ -66,6 +65,7 @@ void Player::OnCollision(Object * obj)
             Level1::scene->Delete(obj, STATIC);
         else if (SuperJudsonWorld::n_level == 2) 
             Level2::scene->Delete(obj, STATIC);
+        SuperJudsonWorld::pontos += 250;
     }
     else if (obj->Type() == ENEMY1 || obj->Type() == ENEMY2) {
         //pulo - mata o inimigo
@@ -78,6 +78,7 @@ void Player::OnCollision(Object * obj)
             player->Bottom() > enemy->Top() && player->Bottom() < enemy->Bottom()) {
             if (SuperJudsonWorld::n_level == 1) Level1::scene->Delete(obj, MOVING);
             else if (SuperJudsonWorld::n_level == 2) Level1::scene->Delete(obj, MOVING);
+            SuperJudsonWorld::pontos += 100;
         }
         else {
             SuperJudsonWorld::lost = true;

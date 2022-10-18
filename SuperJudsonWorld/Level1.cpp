@@ -111,6 +111,7 @@ void Level1::Update()
     if (window->KeyPress('N')) {
         SuperJudsonWorld::n_level = 2;
         SuperJudsonWorld::NextLevel<Level2>();
+        SuperJudsonWorld::pontos += 500;
     }
 
     //else if (SuperJudsonWorld::player->Bottom() < 0 || SuperJudsonWorld::player->Top() > window->Height())
