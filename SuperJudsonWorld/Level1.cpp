@@ -60,7 +60,7 @@ void Level1::Init()
 
             if (cont == 0 || cont == 2 || cont == 3) {
                 float x = plat->X() - (plat->Width() * 0.25f) / 2;
-                float y = plat->Y() - (plat->Height() * 0.25f) / 2;
+                float y = plat->Y() - 32;
 
                 en = new Enemy(x, y, plat);
                 scene->Add(en, MOVING);
