@@ -7,6 +7,7 @@
 #include "Audio.h"
 #include "Player.h"
 #include "Resources.h"
+#include "Hud.h"
 
 // ------------------------------------------------------------------------------
 
@@ -23,6 +24,10 @@ public:
     static Player * player;         // jogador 
     static Audio * audio;           // sistema de �udio
     static bool viewBBox;           // estado da bounding box
+
+    static Hud * hud;
+
+    static float pontos;
 
     void Init();                    // inicializa jogo
     void Update();                  // atualiza l�gica do jogo

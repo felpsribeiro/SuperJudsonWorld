@@ -10,6 +10,8 @@ Game*   SuperJudsonWorld::level = nullptr;
 Player* SuperJudsonWorld::player = nullptr;
 Audio*  SuperJudsonWorld::audio = nullptr;
 bool    SuperJudsonWorld::viewBBox = false;
+float   SuperJudsonWorld::pontos = 0.0f;
+Hud*    SuperJudsonWorld::hud = nullptr;
 
 // ------------------------------------------------------------------------------
 
@@ -23,6 +25,9 @@ void SuperJudsonWorld::Init()
 
     // bounding box n�o vis�vel
     viewBBox = false;
+
+    hud = new Hud();
+
 
     // cria jogador
     player = new Player();
@@ -42,6 +47,7 @@ void SuperJudsonWorld::Update()
 
     // atualiza n�vel
     level->Update();
+    hud->Update();
 } 
 
 // ------------------------------------------------------------------------------

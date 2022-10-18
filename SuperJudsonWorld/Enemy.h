@@ -7,6 +7,7 @@
 #include "Types.h"                      // tipos espec�ficos da engine
 #include "Object.h"                     // interface de Object
 #include "Animation.h"                  // anima��o de sprites
+#include "Platform.h"
 
 // ------------------------------------------------------------------------------
          
@@ -19,9 +20,10 @@ private:
     TileSet* tileset;                // folha de sprites do personagem
     Animation* anim;                   // anima��o do personagem
     uint direction;
+    Platform* platform;
 
 public:
-    Enemy(float x_init, float y_init);                           // construtor
+    Enemy(float x_init, float y_init, Platform* plat);  // construtor
     ~Enemy();                          // destrutor
 
     int Level();                        // �ltimo n�vel finalizado
