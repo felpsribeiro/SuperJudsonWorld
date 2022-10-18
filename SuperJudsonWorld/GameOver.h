@@ -5,6 +5,10 @@
 
 #include "Game.h"
 #include "Sprite.h"
+#include "Font.h"
+#include <sstream>
+
+using std::stringstream;
 
 // ------------------------------------------------------------------------------
 
@@ -12,6 +16,9 @@ class GameOver : public Game
 {
 private:
     Sprite * title = nullptr;       // tela de fim
+
+    Font* font = nullptr;
+    stringstream text;
 
 public:
     void Init();                    // inicializa��o do n�vel

@@ -24,6 +24,7 @@ Scene* Level2::scene = nullptr;
 
 void Level2::Init()
 {
+    SuperJudsonWorld::hud->ResetTime();
     // cria gerenciador de cena
     scene = new Scene();
 
@@ -103,6 +104,7 @@ void Level2::Update()
         SuperJudsonWorld::audio->Stop(MUSIC);
         SuperJudsonWorld::NextLevel<Home>();
         SuperJudsonWorld::player->Reset();
+        SuperJudsonWorld::pontos = 0;
     }
     //else if (SuperJudsonWorld::player->Bottom() < 0 || SuperJudsonWorld::player->Top() > window->Height())
     //{
@@ -118,6 +120,12 @@ void Level2::Update()
     {
         scene->Update();
         scene->CollisionDetection();
+
+        if (SuperJudsonWorld::hud->Time() == 0) {
+            SuperJudsonWorld::audio->Stop(MUSIC);
+            SuperJudsonWorld::player->Reset();
+            SuperJudsonWorld::NextLevel<GameOver>();
+        }
     }
 
     if (SuperJudsonWorld::lost) {

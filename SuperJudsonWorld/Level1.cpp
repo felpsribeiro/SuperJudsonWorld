@@ -111,6 +111,7 @@ void Level1::Update()
     if (window->KeyPress('N')) {
         SuperJudsonWorld::n_level = 2;
         SuperJudsonWorld::NextLevel<Level2>();
+        SuperJudsonWorld::pontos += 500;
     }
 
     //else if (SuperJudsonWorld::player->Bottom() < 0 || SuperJudsonWorld::player->Top() > window->Height())
@@ -127,12 +128,17 @@ void Level1::Update()
     {
         scene->Update();
         scene->CollisionDetection();
-    } 
-
-    if (SuperJudsonWorld::lost) {
-        SuperJudsonWorld::lost = false;
-        SuperJudsonWorld::NextLevel<GameOver>(); // substituir pela tela de transição
-    }
+        
+        if (SuperJudsonWorld::hud->Time() == 0 || SuperJudsonWorld::lost) {
+            
+            if (SuperJudsonWorld::lost)
+                SuperJudsonWorld::lost = false;
+          
+            SuperJudsonWorld::audio->Stop(MUSIC);
+            SuperJudsonWorld::player->Reset();
+            SuperJudsonWorld::NextLevel<GameOver>();
+        }
+    }    
 }
 
 // ------------------------------------------------------------------------------

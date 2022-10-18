@@ -18,6 +18,9 @@ void Hud::Update() {
 	if (timer.Elapsed() > 1.0f) {
 		time--;
 		timer.Reset();
+
+		if (time < 0)
+			time = 0;
 	}	
 
 }
@@ -29,6 +32,8 @@ void Hud::Draw() {
 	fonte->Draw(window->Width() - 48.0f, 30.0f, text.str());
 
 	text.str("");
+	text.width(3);
+	text.fill('0');
 	text << time;
 	fonte->Draw(window->Width() - 35.0f, 60.0f, text.str());
 
@@ -37,6 +42,8 @@ void Hud::Draw() {
 	fonte->Draw(40.0f, 30.0f, text.str());
 
 	text.str("");
+	text.width(4);
+	text.fill('0');
 	text << SuperJudsonWorld::pontos;
 	fonte->Draw(60.0f, 60.0f, text.str());
 }
