@@ -12,7 +12,7 @@
 // ------------------------------------------------------------------------------
 
 enum Sounds {MENU, MUSIC, TRANSITION};
-enum Objects {ENEMY1, ENEMY2, COIN};
+enum Objects {ENEMY1, ENEMY2, COIN, PLAT_RED, PLAT_GRAY};
 
 // ------------------------------------------------------------------------------
 
@@ -29,6 +29,9 @@ public:
     static Hud * hud;
 
     static float pontos;
+
+    static int n_level;
+    static bool lost;
 
     void Init();                    // inicializa jogo
     void Update();                  // atualiza l�gica do jogo

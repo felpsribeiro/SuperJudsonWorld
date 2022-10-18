@@ -108,7 +108,10 @@ void Level1::Update()
         window->Close();
     }
 
-    if(window->KeyPress('N')) SuperJudsonWorld::NextLevel<Level2>();
+    if (window->KeyPress('N')) {
+        SuperJudsonWorld::n_level = 2;
+        SuperJudsonWorld::NextLevel<Level2>();
+    }
 
     //else if (SuperJudsonWorld::player->Bottom() < 0 || SuperJudsonWorld::player->Top() > window->Height())
     //{
@@ -124,7 +127,12 @@ void Level1::Update()
     {
         scene->Update();
         scene->CollisionDetection();
-    }    
+    } 
+
+    if (SuperJudsonWorld::lost) {
+        SuperJudsonWorld::lost = false;
+        SuperJudsonWorld::NextLevel<GameOver>(); // substituir pela tela de transição
+    }
 }
 
 // ------------------------------------------------------------------------------
