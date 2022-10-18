@@ -13,6 +13,8 @@ using std::ifstream;
 using std::string;
 
 #include "Enemy.h"
+#include "Level2.h"
+#include "Coin.h"
 
 // ------------------------------------------------------------------------------
 // Inicializa membros est�ticos da classe
@@ -40,6 +42,7 @@ void Level1::Init()
     uint  platType;
     Color white{ 1,1,1,1 };
     int cont = 0;
+    Coin* coin;
 
     ifstream fin;
     fin.open("Level1.txt");
@@ -61,6 +64,9 @@ void Level1::Init()
 
                 en = new Enemy(x, y, plat);
                 scene->Add(en, MOVING);
+
+                coin = new Coin(plat->X(), plat->Y() - 50);
+                scene->Add(coin, STATIC);
             }
             cont++;
         }
@@ -101,6 +107,9 @@ void Level1::Update()
 
         window->Close();
     }
+
+    if(window->KeyPress('N')) SuperJudsonWorld::NextLevel<Level2>();
+
     //else if (SuperJudsonWorld::player->Bottom() < 0 || SuperJudsonWorld::player->Top() > window->Height())
     //{
     //    SuperJudsonWorld::audio->Stop(MUSIC);

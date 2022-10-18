@@ -7,13 +7,13 @@ Platform::Platform(float posX, float posY, uint platType, Color tint) : color(ti
     switch (platType)
     {
         case RED:  platform = new Sprite("Resources/platform_1.png"); type = RED; break;
-        case GRAY: /*platform = new Sprite("Resources/platform_2.png");*/ type = GRAY; break;
+        case GRAY: platform = new Sprite("Resources/platform_2.png"); type = GRAY; break;
     }
     
-    BBox(new Rect(-platform->Width()/2.0f, 
-                  -platform->Height()/2.0f, 
-                   platform->Width()/2.0f, 
-                   platform->Height()/2.0f));
+    BBox(new Rect(-(platform->Width() * 0.25f) / 2.0f,
+                  -(platform->Height() * 0.25f) / 2.0f,
+                   (platform->Width() * 0.25f) / 2.0f,
+                   (platform->Height() * 0.25f) / 2.0f));
 
     MoveTo(posX, posY, Layer::MIDDLE);
 }
