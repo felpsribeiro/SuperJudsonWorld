@@ -34,6 +34,7 @@ void Level2::Init()
 
 
     // adiciona jogador na cena
+    SuperJudsonWorld::player->Reset();
     scene->Add(SuperJudsonWorld::player, MOVING);
 
     Platform* plat;
@@ -91,6 +92,7 @@ void Level2::Init()
     //SuperJudsonWorld::audio->Frequency(MUSIC, 0.94f);
     //SuperJudsonWorld::audio->Frequency(TRANSITION, 1.0f);
     //SuperJudsonWorld::audio->Play(MUSIC);
+
 }
 
 // ------------------------------------------------------------------------------
@@ -123,6 +125,11 @@ void Level2::Update()
             SuperJudsonWorld::player->Reset();
             SuperJudsonWorld::NextLevel<GameOver>();
         }
+    }
+
+    if (SuperJudsonWorld::lost) {
+        SuperJudsonWorld::lost = false;
+        SuperJudsonWorld::NextLevel<GameOver>(); // substituir pela tela de transição
     }
 }
 

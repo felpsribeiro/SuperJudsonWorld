@@ -30,6 +30,8 @@ Enemy2::Enemy2(float x_init, float y_init)
     MoveTo(x_init, y_init, Layer::FRONT);
 
     direction = RIGHT;
+
+    type = ENEMY2;
 }
 
 // ---------------------------------------------------------------------------------
@@ -44,7 +46,7 @@ Enemy2::~Enemy2()
 
 void Enemy2::OnCollision(Object* obj)
 {
-    if (obj->Type() == GRAY) {
+    if (obj->Type() == PLAT_GRAY) {
         Platform* plat = (Platform*) obj;
         Rect* p = (Rect*) plat->BBox();
 

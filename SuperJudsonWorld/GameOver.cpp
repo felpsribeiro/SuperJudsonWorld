@@ -16,8 +16,10 @@ void GameOver::Init()
 
 void GameOver::Update()
 {
-    if (window->KeyPress(VK_ESCAPE) || window->KeyPress(VK_RETURN))
+    if (window->KeyPress(VK_ESCAPE) || window->KeyPress(VK_RETURN)) {
+        SuperJudsonWorld::player->Reset();
         SuperJudsonWorld::NextLevel<Home>();
+    }
 }
 
 // ----------------------------------------------------------------------

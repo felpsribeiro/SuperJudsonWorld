@@ -7,6 +7,7 @@
 #include "Types.h"                      // tipos espec�ficos da engine
 #include "Object.h"                     // interface de Object
 #include "Animation.h"                  // anima��o de sprites
+#include "SuperJudsonWorld.h"
 
 // ------------------------------------------------------------------------------
 
