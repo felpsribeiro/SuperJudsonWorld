@@ -1,11 +1,14 @@
 #include "Player.h"
 #include "SuperJudsonWorld.h"
 #include "Platform.h"
+#include "Level1.h"
+#include "Level2.h"
 
 // ---------------------------------------------------------------------------------
 
 Player::Player()
 {
+
     tileset = new TileSet("Resources/Player.png", 50, 80, 3, 6);
     anim = new Animation(tileset, 0.120f, true);
 
@@ -49,7 +52,7 @@ Player::~Player()
 void Player::Reset()
 {
     // volta ao estado inicial
-    MoveTo(49.0f, 392.0f, Layer::FRONT);
+    MoveTo(49.0f, 432.0f, Layer::FRONT);
 }
 
 
@@ -57,41 +60,39 @@ void Player::Reset()
 
 void Player::OnCollision(Object * obj)
 {
-    //if (obj->Type() == FINISH)
-    //{
-    //    // chegou ao final do n�vel
-    //    level++;
-    //}
-    //else
-    //{
-    //    // mant�m personagem em cima da plataforma
-    //    if (gravity == NORMAL)
-    //        MoveTo(window->CenterX(), obj->Y() - 32);
-    //    else
-    //        MoveTo(window->CenterX(), obj->Y() + 32);
-    //}
+    Rect* player = (Rect*)BBox();
 
-    //// ----------------------------------------------------------
-    //// Processa teclas pressionadas
-    //// ----------------------------------------------------------
-    //// jogador s� pode alterar a gravidade enquanto estiver
-    //// em cima de uma plataforma, n�o � poss�vel a mudan�a no ar
-    //// ----------------------------------------------------------
+    if (obj->Type() == COIN) {
+        if (SuperJudsonWorld::n_level == 1) 
+            Level1::scene->Delete(obj, STATIC);
+        else if (SuperJudsonWorld::n_level == 2) 
+            Level2::scene->Delete(obj, STATIC);
+        SuperJudsonWorld::pontos += 250;
+    }
+    else if (obj->Type() == ENEMY1 || obj->Type() == ENEMY2) {
+        //pulo - mata o inimigo
+        //de frente - morre
 
-    //if (window->KeyPress(VK_SPACE))
-    //{
-    //    gravity = !gravity;
+        Rect* enemy = (Rect*)obj->BBox();
 
-    //    // toca efeito sonoro
-    //    SuperJudsonWorld::audio->Play(TRANSITION);
+        if (enemy->Left() > player->Left() && enemy->Right() < player->Right() && 
+            player->Bottom() > enemy->Top() && player->Bottom() < enemy->Bottom()) {
+            if (SuperJudsonWorld::n_level == 1) Level1::scene->Delete(obj, MOVING);
+            else if (SuperJudsonWorld::n_level == 2) Level1::scene->Delete(obj, MOVING);
+            SuperJudsonWorld::pontos += 100;
+        }
+        else {
+            SuperJudsonWorld::lost = true;
+        }
+    }
+    else if (obj->Type() == PLAT_RED || obj->Type() == PLAT_GRAY) {
+        Platform* plat = (Platform*)obj;
+        Rect* platform = (Rect*)obj->BBox();
 
-    //    // tira player da plataforma para evitar 
-    //    // detec��o de colis�o no quadro seguinte
-    //    if (gravity == NORMAL)
-    //        Translate(0, 12);
-    //    else
-    //        Translate(0 , -12);
-    //}
+        if (player->Left() < platform->Right() && player->Right() > platform->Left() && player->Top() < platform->Top())
+            // mant�m personagem em cima da plataforma
+            MoveTo(X(), plat->Y() - plat->Height()  / 2);
+    }
 }
 
 // ---------------------------------------------------------------------------------
@@ -101,16 +102,17 @@ void Player::Update()
     if (window->KeyPress(VK_SPACE) && direction == STOP)
     {
         direction = UP;
+        speedY = 900.0f;
     }
     else if (window->KeyDown(VK_LEFT))
     {
         state = LEFT_W;
-        Translate(-speed * gameTime, 0);
+        Translate(-speedX * gameTime, 0);
     } 
     else if (window->KeyDown(VK_RIGHT))
     {
         state = RIGHT_W;
-        Translate(speed * gameTime, 0);
+        Translate(speedX * gameTime, 0);
     }
     else if (window->KeyUp(VK_RIGHT) && window->KeyUp(VK_LEFT) || window->KeyDown(VK_RIGHT) && window->KeyDown(VK_LEFT))
     {
@@ -147,10 +149,10 @@ void Player::Update()
     // controla a gravidade do personagem
     if (direction == UP)
     {
-        if (speed > 0.0f)
+        if (speedY > 0.0f)
         {
-            speed -= gravit;
-            Translate(0, -speed * gameTime);
+            speedY -= gravit;
+            Translate(0, -speedY * gameTime);
         }
         else
         {
@@ -159,8 +161,8 @@ void Player::Update()
     } 
     else if (direction == DOWN)
     {
-        speed += gravit;
-        Translate(0, speed * gameTime);
+        speedY += gravit;
+        Translate(0, speedY * gameTime);
     }
 
     // APAGAR DEPOIS

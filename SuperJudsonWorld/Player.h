@@ -21,7 +21,11 @@ private:
     TileSet   * tileset;                // folha de sprites do personagem
     Animation * anim;                   // anima��o do personagem
     State       state = RIGHT_S;
-    float       speed = 300.0f;
+
+
+    float       speedX = 300.0f;
+    float       speedY = 0.0f;
+
     const float gravit = 0.5f;
     uint        direction = STOP;
 

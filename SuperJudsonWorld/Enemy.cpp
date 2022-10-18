@@ -6,6 +6,8 @@
 
 Enemy::Enemy(float x_init, float y_init, Platform* plat)
 {
+    type = ENEMY1;
+
     tileset = new TileSet("Resources/enemy_1.png", 34, 32, 3, 6); 
     platform = plat;
 
@@ -29,6 +31,8 @@ Enemy::Enemy(float x_init, float y_init, Platform* plat)
     MoveTo(x_init, y_init, Layer::FRONT);
 
     direction = RIGHT;
+    
+    type = ENEMY1;
 }
 
 // ---------------------------------------------------------------------------------

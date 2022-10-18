@@ -60,7 +60,7 @@ void Level1::Init()
 
             if (cont == 0 || cont == 2 || cont == 3) {
                 float x = plat->X() - (plat->Width() * 0.25f) / 2;
-                float y = plat->Y() - (plat->Height() * 0.25f) / 2;
+                float y = plat->Y() - 32;
 
                 en = new Enemy(x, y, plat);
                 scene->Add(en, MOVING);
@@ -108,7 +108,11 @@ void Level1::Update()
         window->Close();
     }
 
-    if(window->KeyPress('N')) SuperJudsonWorld::NextLevel<Level2>();
+    if (window->KeyPress('N')) {
+        SuperJudsonWorld::n_level = 2;
+        SuperJudsonWorld::NextLevel<Level2>();
+        SuperJudsonWorld::pontos += 500;
+    }
 
     //else if (SuperJudsonWorld::player->Bottom() < 0 || SuperJudsonWorld::player->Top() > window->Height())
     //{
@@ -124,6 +128,16 @@ void Level1::Update()
     {
         scene->Update();
         scene->CollisionDetection();
+        
+        if (SuperJudsonWorld::hud->Time() == 0 || SuperJudsonWorld::lost) {
+            
+            if (SuperJudsonWorld::lost)
+                SuperJudsonWorld::lost = false;
+          
+            SuperJudsonWorld::audio->Stop(MUSIC);
+            SuperJudsonWorld::player->Reset();
+            SuperJudsonWorld::NextLevel<GameOver>();
+        }
     }    
 }
 
