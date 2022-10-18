@@ -29,6 +29,8 @@ Enemy::Enemy(float x_init, float y_init, Platform* plat)
     MoveTo(x_init, y_init, Layer::FRONT);
 
     direction = RIGHT;
+    
+    type = ENEMY1;
 }
 
 // ---------------------------------------------------------------------------------

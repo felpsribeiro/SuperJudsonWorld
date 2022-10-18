@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "SuperJudsonWorld.h"
 #include "Platform.h"
+#include "Level1.h"
+#include "Level2.h"
 
 // ---------------------------------------------------------------------------------
 
@@ -49,7 +51,7 @@ Player::~Player()
 void Player::Reset()
 {
     // volta ao estado inicial
-    MoveTo(49.0f, 392.0f, Layer::FRONT);
+    MoveTo(49.0f, 432.0f, Layer::FRONT);
 }
 
 
@@ -57,41 +59,28 @@ void Player::Reset()
 
 void Player::OnCollision(Object * obj)
 {
-    //if (obj->Type() == FINISH)
-    //{
-    //    // chegou ao final do n�vel
-    //    level++;
-    //}
-    //else
-    //{
-    //    // mant�m personagem em cima da plataforma
-    //    if (gravity == NORMAL)
-    //        MoveTo(window->CenterX(), obj->Y() - 32);
-    //    else
-    //        MoveTo(window->CenterX(), obj->Y() + 32);
-    //}
+    if (obj->Type() == COIN) {
+        if (SuperJudsonWorld::n_level == 1) 
+            Level1::scene->Delete(obj, STATIC);
+        else if (SuperJudsonWorld::n_level == 2) 
+            Level2::scene->Delete(obj, STATIC);
+    }
+    else if (obj->Type() == ENEMY1 || obj->Type() == ENEMY2) {
+        //pulo - mata o inimigo
+        //de frente - morre
 
-    //// ----------------------------------------------------------
-    //// Processa teclas pressionadas
-    //// ----------------------------------------------------------
-    //// jogador s� pode alterar a gravidade enquanto estiver
-    //// em cima de uma plataforma, n�o � poss�vel a mudan�a no ar
-    //// ----------------------------------------------------------
+        Rect* enemy = (Rect*)obj->BBox();
+        Rect* player = (Rect*)BBox();
 
-    //if (window->KeyPress(VK_SPACE))
-    //{
-    //    gravity = !gravity;
-
-    //    // toca efeito sonoro
-    //    SuperJudsonWorld::audio->Play(TRANSITION);
-
-    //    // tira player da plataforma para evitar 
-    //    // detec��o de colis�o no quadro seguinte
-    //    if (gravity == NORMAL)
-    //        Translate(0, 12);
-    //    else
-    //        Translate(0 , -12);
-    //}
+        if (enemy->Left() > player->Left() && enemy->Right() < player->Right() && 
+            player->Bottom() > enemy->Top() && player->Bottom() < enemy->Bottom()) {
+            if (SuperJudsonWorld::n_level == 1) Level1::scene->Delete(obj, MOVING);
+            else if (SuperJudsonWorld::n_level == 2) Level1::scene->Delete(obj, MOVING);
+        }
+        else {
+            SuperJudsonWorld::lost = true;
+        }
+    }
 }
 
 // ---------------------------------------------------------------------------------
