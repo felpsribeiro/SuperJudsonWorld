@@ -93,7 +93,7 @@ void Player::OnCollision(Object * obj)
         {
             // mant�m personagem em cima da plataforma
             vector = STOPPED;
-            MoveTo(x, platform->Top() - tileset->Height() / 2.0f);
+            MoveTo(x, platform->Top());
         }
     }
 }
