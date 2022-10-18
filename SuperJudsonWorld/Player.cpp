@@ -60,6 +60,8 @@ void Player::Reset()
 
 void Player::OnCollision(Object * obj)
 {
+    Rect* player = (Rect*)BBox();
+
     if (obj->Type() == COIN) {
         if (SuperJudsonWorld::n_level == 1) 
             Level1::scene->Delete(obj, STATIC);
@@ -72,7 +74,6 @@ void Player::OnCollision(Object * obj)
         //de frente - morre
 
         Rect* enemy = (Rect*)obj->BBox();
-        Rect* player = (Rect*)BBox();
 
         if (enemy->Left() > player->Left() && enemy->Right() < player->Right() && 
             player->Bottom() > enemy->Top() && player->Bottom() < enemy->Bottom()) {
@@ -84,6 +85,14 @@ void Player::OnCollision(Object * obj)
             SuperJudsonWorld::lost = true;
         }
     }
+    else if (obj->Type() == PLAT_RED || obj->Type() == PLAT_GRAY) {
+        Platform* plat = (Platform*)obj;
+        Rect* platform = (Rect*)obj->BBox();
+
+        if (player->Left() < platform->Right() && player->Right() > platform->Left() && player->Top() < platform->Top())
+            // mant�m personagem em cima da plataforma
+            MoveTo(X(), plat->Y() - plat->Height()  / 2);
+    }
 }
 
 // ---------------------------------------------------------------------------------
@@ -93,16 +102,17 @@ void Player::Update()
     if (window->KeyPress(VK_SPACE) && direction == STOP)
     {
         direction = UP;
+        speedY = 900.0f;
     }
     else if (window->KeyDown(VK_LEFT))
     {
         state = LEFT_W;
-        Translate(-speed * gameTime, 0);
+        Translate(-speedX * gameTime, 0);
     } 
     else if (window->KeyDown(VK_RIGHT))
     {
         state = RIGHT_W;
-        Translate(speed * gameTime, 0);
+        Translate(speedX * gameTime, 0);
     }
     else if (window->KeyUp(VK_RIGHT) && window->KeyUp(VK_LEFT) || window->KeyDown(VK_RIGHT) && window->KeyDown(VK_LEFT))
     {
@@ -139,10 +149,10 @@ void Player::Update()
     // controla a gravidade do personagem
     if (direction == UP)
     {
-        if (speed > 0.0f)
+        if (speedY > 0.0f)
         {
-            speed -= gravit;
-            Translate(0, -speed * gameTime);
+            speedY -= gravit;
+            Translate(0, -speedY * gameTime);
         }
         else
         {
@@ -151,8 +161,8 @@ void Player::Update()
     } 
     else if (direction == DOWN)
     {
-        speed += gravit;
-        Translate(0, speed * gameTime);
+        speedY += gravit;
+        Translate(0, speedY * gameTime);
     }
 
     // APAGAR DEPOIS
