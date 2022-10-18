@@ -28,6 +28,8 @@ Enemy2::Enemy2(float x_init, float y_init)
     MoveTo(x_init, y_init, Layer::FRONT);
 
     direction = RIGHT;
+
+    type = ENEMY2;
 }
 
 // ---------------------------------------------------------------------------------

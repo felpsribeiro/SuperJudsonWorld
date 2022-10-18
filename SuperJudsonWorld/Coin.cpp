@@ -19,6 +19,8 @@ Coin::Coin(float x_init, float y_init)
 
     // posi��o inicial
     MoveTo(x_init, y_init, Layer::FRONT);
+
+    type = COIN;
 }
 
 // ---------------------------------------------------------------------------------

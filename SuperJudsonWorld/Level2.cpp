@@ -90,6 +90,7 @@ void Level2::Init()
     //SuperJudsonWorld::audio->Frequency(MUSIC, 0.94f);
     //SuperJudsonWorld::audio->Frequency(TRANSITION, 1.0f);
     //SuperJudsonWorld::audio->Play(MUSIC);
+
 }
 
 // ------------------------------------------------------------------------------
