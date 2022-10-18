@@ -10,11 +10,11 @@ Player::Player()
 {
 
     tileset = new TileSet("Resources/Player.png", 50, 80, 3, 6);
-    anim = new Animation(tileset, 0.120f, true);
+    anim = new Animation(tileset, 0.540f, true);
 
     // sequ�ncias de anima��o do player
     uint walkerLeft[2]  = { 0, 1 };
-    uint jumpLeft[2]    = { 0, 3 };
+    uint jumpLeft[2]    = { 0, 2 };
     uint stillLeft[1]   = { 0 };
     uint walkerRight[2] = { 3, 4 };
     uint jumpRight[2]   = { 3, 5 };
@@ -90,8 +90,11 @@ void Player::OnCollision(Object * obj)
         Rect* platform = (Rect*)obj->BBox();
 
         if (player->Left() < platform->Right() && player->Right() > platform->Left() && player->Top() < platform->Top())
+        {
             // mant�m personagem em cima da plataforma
-            MoveTo(X(), plat->Y() - plat->Height()  / 2);
+            vector = STOPPED;
+            MoveTo(x, platform->Top() - tileset->Height() / 2.0f);
+        }
     }
 }
 
@@ -99,22 +102,11 @@ void Player::OnCollision(Object * obj)
 
 void Player::Update()
 {
-    if (window->KeyPress(VK_SPACE) && direction == STOP)
+    if (window->KeyPress(VK_SPACE) && vector == STOPPED)
     {
-        direction = UP;
-        speedY = 900.0f;
+        vector = UP;
     }
-    else if (window->KeyDown(VK_LEFT))
-    {
-        state = LEFT_W;
-        Translate(-speedX * gameTime, 0);
-    } 
-    else if (window->KeyDown(VK_RIGHT))
-    {
-        state = RIGHT_W;
-        Translate(speedX * gameTime, 0);
-    }
-    else if (window->KeyUp(VK_RIGHT) && window->KeyUp(VK_LEFT) || window->KeyDown(VK_RIGHT) && window->KeyDown(VK_LEFT))
+    else if (window->KeyDown(VK_RIGHT) && window->KeyDown(VK_LEFT))
     {
         switch (state)
         {
@@ -134,6 +126,28 @@ void Player::Update()
         }
         }
     }
+    else if (window->KeyDown(VK_LEFT))
+    {
+         if (vector == UP)
+             state = LEFT_S;
+         else if (vector == DOWN)
+             state = LEFT_J;
+         else
+             state = LEFT_W;
+
+        Translate(-speed * gameTime, 0);
+    } 
+    else if (window->KeyDown(VK_RIGHT))
+    {
+         if (vector == UP)
+             state = RIGHT_S;
+         else if (vector == DOWN)
+             state = RIGHT_J;
+         else
+             state = RIGHT_W;
+
+        Translate(speed * gameTime, 0);
+    }
 
     // atualiza animação
     anim->Select(state);
@@ -143,35 +157,39 @@ void Player::Update()
     if (x + tileset->TileWidth() / 2.0f > window->Width())
         MoveTo(window->Width() - tileset->TileWidth() / 2.0f, y);
 
-    if (x - tileset->TileWidth() / 2.0f < 0)
+    else if (x - tileset->TileWidth() / 2.0f < 0)
         MoveTo(tileset->TileWidth() / 2.0f, y);
 
-    // controla a gravidade do personagem
-    if (direction == UP)
+    else if (y - tileset->Height() / 2.0f < 0)
+        MoveTo(x, tileset->Height() / 2.0f);
+
+    else if (y > 432.0f)
     {
-        if (speedY > 0.0f)
-        {
-            speedY -= gravit;
-            Translate(0, -speedY * gameTime);
-        }
-        else
-        {
-            direction = DOWN;
-        }
-    } 
-    else if (direction == DOWN)
-    {
-        speedY += gravit;
-        Translate(0, speedY * gameTime);
+        vector = STOPPED;
+        MoveTo(x, 432.0f);
     }
 
-    // APAGAR DEPOIS
-    if (y - tileset->TileHeight() / 2.0f > 432.0f)
+    // controla a gravidade do personagem
+    if (vector == UP)
     {
-        MoveTo(x, 432.0f);
-        direction = STOP;
+        speed -= gravit;
+        Translate(0, -speed * gameTime);
+            
+        if (speed < 0.0f)
+            vector = DOWN;
     }
+    else if (vector == DOWN)
+    {
+        if (state == LEFT_W || state == LEFT_S)
+            state = LEFT_J;
+        else if (state == RIGHT_W || state == RIGHT_S)
+            state = RIGHT_J;
         
+        speed += gravit;
+        Translate(0, speed * gameTime);
+    }
+    else if (vector == STOPPED)
+        speed = maxSpeed; 
 }
 
 // ---------------------------------------------------------------------------------

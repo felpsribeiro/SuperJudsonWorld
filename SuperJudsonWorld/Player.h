@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 
 enum State { LEFT_W, LEFT_J, LEFT_S, RIGHT_W, RIGHT_J, RIGHT_S };
-enum Direction { UP, DOWN, STOP };
+enum Direction { STOPPED, UP, DOWN };
 
 // ---------------------------------------------------------------------------------
 
@@ -22,12 +22,10 @@ private:
     Animation * anim;                   // anima��o do personagem
     State       state = RIGHT_S;
 
-
-    float       speedX = 300.0f;
-    float       speedY = 0.0f;
-
-    const float gravit = 0.5f;
-    uint        direction = STOP;
+    const float maxSpeed = 100.0f;
+    float       speed = maxSpeed;
+    const float gravit = 0.020f;
+    Direction   vector = STOPPED;
 
 public:
     Player();                           // construtor
