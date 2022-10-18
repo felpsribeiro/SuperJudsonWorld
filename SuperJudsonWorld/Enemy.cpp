@@ -6,6 +6,8 @@
 
 Enemy::Enemy(float x_init, float y_init, Platform* plat)
 {
+    type = ENEMY;
+
     tileset = new TileSet("Resources/enemy_1.png", 34, 32, 3, 6); 
     platform = plat;
 

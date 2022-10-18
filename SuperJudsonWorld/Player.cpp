@@ -6,6 +6,8 @@
 
 Player::Player()
 {
+    type = PLAYER;
+
     tileset = new TileSet("Resources/Player.png", 50, 80, 3, 6);
     anim = new Animation(tileset, 0.120f, false);
 

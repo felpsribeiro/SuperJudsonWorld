@@ -20,7 +20,7 @@ private:
     TileSet* tileset;                // folha de sprites do personagem
     Animation* anim;                   // anima��o do personagem
     uint direction;
-    Platform* platform;
+    //Platform* platform;
 
 public:
     Enemy2(float x_init, float y_init);  // construtor

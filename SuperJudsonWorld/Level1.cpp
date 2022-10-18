@@ -119,6 +119,12 @@ void Level1::Update()
     {
         scene->Update();
         scene->CollisionDetection();
+
+        if (SuperJudsonWorld::hud->Time() == 0) {
+            SuperJudsonWorld::audio->Stop(MUSIC);
+            SuperJudsonWorld::player->Reset();
+            SuperJudsonWorld::NextLevel<GameOver>();
+        }
     }    
 }
 

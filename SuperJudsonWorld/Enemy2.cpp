@@ -6,6 +6,8 @@
 
 Enemy2::Enemy2(float x_init, float y_init)
 {
+    type = ENEMY;
+
     tileset = new TileSet("Resources/enemy_2.png", 44, 62, 2, 4);
 
     uint left[2] = { 0, 1 };
