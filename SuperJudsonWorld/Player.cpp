@@ -162,6 +162,14 @@ void Player::Update()
         speed += gravit;
         Translate(0, speed * gameTime);
     }
+
+    // APAGAR DEPOIS
+    if (y - tileset->TileHeight() / 2.0f > 432.0f)
+    {
+        MoveTo(x, 432.0f);
+        direction = STOP;
+    }
+        
 }
 
 // ---------------------------------------------------------------------------------
