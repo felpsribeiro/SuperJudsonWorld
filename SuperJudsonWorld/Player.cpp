@@ -88,7 +88,7 @@ void Player::OnCollision(Object * obj)
 
         if (player->Left() < platform->Right() && player->Right() > platform->Left() && player->Top() < platform->Top())
             // mant�m personagem em cima da plataforma
-            MoveTo(X(), plat->Y() - (plat->Height() * 0.25f) / 2);
+            MoveTo(X(), plat->Y() - plat->Height()  / 2);
     }
 }
 
@@ -99,16 +99,17 @@ void Player::Update()
     if (window->KeyPress(VK_SPACE) && direction == STOP)
     {
         direction = UP;
+        speedY = 900.0f;
     }
     else if (window->KeyDown(VK_LEFT))
     {
         state = LEFT_W;
-        Translate(-speed * gameTime, 0);
+        Translate(-speedX * gameTime, 0);
     } 
     else if (window->KeyDown(VK_RIGHT))
     {
         state = RIGHT_W;
-        Translate(speed * gameTime, 0);
+        Translate(speedX * gameTime, 0);
     }
     else if (window->KeyUp(VK_RIGHT) && window->KeyUp(VK_LEFT) || window->KeyDown(VK_RIGHT) && window->KeyDown(VK_LEFT))
     {
@@ -145,10 +146,10 @@ void Player::Update()
     // controla a gravidade do personagem
     if (direction == UP)
     {
-        if (speed > 0.0f)
+        if (speedY > 0.0f)
         {
-            speed -= gravit;
-            Translate(0, -speed * gameTime);
+            speedY -= gravit;
+            Translate(0, -speedY * gameTime);
         }
         else
         {
@@ -157,8 +158,8 @@ void Player::Update()
     } 
     else if (direction == DOWN)
     {
-        speed += gravit;
-        Translate(0, speed * gameTime);
+        speedY += gravit;
+        Translate(0, speedY * gameTime);
     }
 
     // APAGAR DEPOIS
