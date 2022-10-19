@@ -5,26 +5,25 @@
 
 #include "Game.h"
 #include "Sprite.h"
-#include "Font.h"
-#include <sstream>
-
-using std::stringstream;
 
 // ------------------------------------------------------------------------------
 
 class GameOver : public Game
 {
 private:
-    Sprite * title = nullptr;       // tela de fim
-
-    Font* font = nullptr;
-    stringstream text;
+    Sprite * backg = nullptr;       // tela de fim
 
 public:
     void Init();                    // inicializa��o do n�vel
     void Update();                  // l�gica da tela de fim
-    void Draw();                    // desenho da tela
-    void Finalize();                // finaliza��o do n�vel
+    void Draw() 
+    { 
+        backg->Draw(window->CenterX(), window->CenterY());  
+    };                              // desenho da tela
+    void Finalize() 
+    {
+        delete backg;
+    };                              // finaliza��o do n�vel
 };
 
 // ------------------------------------------------------------------------------
