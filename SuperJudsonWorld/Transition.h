@@ -15,6 +15,7 @@ class Transition : public Game
 {
 private:
     Sprite* backg = nullptr;       // pano de fundo
+    Sprite* menu = nullptr;
     TileSet* tileset = nullptr;    // tileset da animação
     Animation* anim = nullptr;     // animação do planeta
 

@@ -7,6 +7,8 @@
 
 void GameOver::Init()
 {
+    SuperJudsonWorld::lost = false;
+
     title = new Sprite("Resources/Tela Game Over.png");
     font = new Font("Resources/Agency30.png");
     font->Spacing("Resources/Agency30.dat");

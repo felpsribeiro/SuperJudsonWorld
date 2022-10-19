@@ -1,11 +1,10 @@
 #include "SuperJudsonWorld.h"
 #include "Home.h"
 #include "Level2.h"
-#include "Level2.h"
+#include "Transition.h"
 #include "GameOver.h"
 #include "Player.h"
 #include "Platform.h"
-#include "Background.h"
 
 #include <string>
 #include <fstream>
@@ -19,25 +18,28 @@ using std::string;
 // Inicializa membros est�ticos da classe
 
 Scene* Level2::scene = nullptr;
+uint Level2::collectedCoins = 0;
 
 // ------------------------------------------------------------------------------
 
 void Level2::Init()
 {
+    SuperJudsonWorld::n_level = 2;
+
     SuperJudsonWorld::hud->ResetTime();
     // cria gerenciador de cena
     scene = new Scene();
 
     // pano de fundo do jogo
-    backg = new Background("Resources/Level2.png");
-    scene->Add(backg, STATIC);
-
+    backg = new Sprite("Resources/Level2.png");
 
     // adiciona jogador na cena
     SuperJudsonWorld::player->Reset();
     scene->Add(SuperJudsonWorld::player, MOVING);
 
     SuperJudsonWorld::audio->Play(MUSIC2, true);
+
+    collectedCoins = 0;
 
     Platform* plat;
     Enemy2* en;
@@ -123,16 +125,16 @@ void Level2::Update()
         scene->Update();
         scene->CollisionDetection();
 
-        if (SuperJudsonWorld::hud->Time() == 0) {
+        if (collectedCoins == 3)
+        {
             SuperJudsonWorld::audio->Stop(MUSIC2);
-            SuperJudsonWorld::player->Reset();
+            SuperJudsonWorld::NextLevel<Transition>();
+        }
+
+        if (SuperJudsonWorld::hud->Time() == 0 || SuperJudsonWorld::lost) {
+            SuperJudsonWorld::audio->Stop(MUSIC2);
             SuperJudsonWorld::NextLevel<GameOver>();
         }
-    }
-
-    if (SuperJudsonWorld::lost) {
-        SuperJudsonWorld::lost = false;
-        SuperJudsonWorld::NextLevel<GameOver>(); // substituir pela tela de transição
     }
 }
 
@@ -140,7 +142,7 @@ void Level2::Update()
 
 void Level2::Draw()
 {
-    backg->Draw();
+    backg->Draw(window->CenterX(), window->CenterY());
     scene->Draw();
 
     if (SuperJudsonWorld::viewBBox)
@@ -154,6 +156,7 @@ void Level2::Draw()
 void Level2::Finalize()
 {
     scene->Remove(SuperJudsonWorld::player, MOVING);
+    delete backg;
     delete scene;
 }
 
