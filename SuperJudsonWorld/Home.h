@@ -15,8 +15,7 @@ class Home : public Game
 {
 private:
     Sprite * backg = nullptr;       // pano de fundo
-    TileSet * tileset = nullptr;    // tileset da animação
-    Animation * anim = nullptr;     // animação do menu
+    Player* player = nullptr;
 
 public:
     void Init();                    // inicia nível

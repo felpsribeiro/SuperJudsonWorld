@@ -8,10 +8,9 @@
 void Home::Init()
 {
     backg = new Sprite("Resources/Home.png");
-    /*tileset = new TileSet("Resources/PressEnter.png", 72, 48, 1, 5);
-    anim = new Animation(tileset, 0.180f, true);*/
-    SuperJudsonWorld::audio->Play(HOME, true);
+    player = new Player();
 
+    SuperJudsonWorld::audio->Play(HOME, true);
 }
 
 // ------------------------------------------------------------------------------
@@ -24,16 +23,9 @@ void Home::Update()
     
     // se a tecla ENTER for pressionada
     if (window->KeyPress(VK_RETURN))
-    {
-        SuperJudsonWorld::n_level = 1;
-        
+    {   
         SuperJudsonWorld::audio->Stop(HOME);
-
         SuperJudsonWorld::NextLevel<Level1>();
-    }
-    else
-    {
-       // anim->NextFrame();
     }
 }
 
@@ -48,9 +40,8 @@ void Home::Draw()
 
 void Home::Finalize()
 {
-    delete anim;
-    delete tileset;
     delete backg;
+    delete player;
 }
 
 // ------------------------------------------------------------------------------
