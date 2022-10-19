@@ -53,6 +53,7 @@ void Player::Reset()
 {
     // volta ao estado inicial
     MoveTo(49.0f, 432.0f, Layer::FRONT);
+    anim->Select(RIGHT_S);
 }
 
 
