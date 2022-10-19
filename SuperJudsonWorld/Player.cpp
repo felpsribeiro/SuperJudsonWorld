@@ -81,11 +81,13 @@ void Player::OnCollision(Object * obj)
 
         Rect* enemy = (Rect*)obj->BBox();
 
-        if (enemy->Left() > player->Left() && enemy->Right() < player->Right() && 
+        if (player->Left() + (tileset->TileWidth() * 2 / 4) > enemy->Left() && (player->Right() - (tileset->TileWidth() * 2 / 4)) < enemy->Right() &&
             player->Bottom() > enemy->Top() && player->Bottom() < enemy->Bottom()) {
             if (SuperJudsonWorld::n_level == 1) Level1::scene->Delete(obj, MOVING);
             else if (SuperJudsonWorld::n_level == 2) Level1::scene->Delete(obj, MOVING);
             SuperJudsonWorld::pontos += 100;
+            speed = maxSpeed / 2;
+            direction = UP;
         }
         else {
             SuperJudsonWorld::lost = true;
