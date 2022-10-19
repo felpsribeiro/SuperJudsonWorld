@@ -118,7 +118,17 @@ void Player::Update()
     {
         direction = UP;
     }
-    else if (window->KeyDown(VK_RIGHT) && window->KeyDown(VK_LEFT))
+    else if (window->KeyDown(VK_LEFT))
+    {
+        state = LEFT_W;
+        Translate(-speed * gameTime, 0);
+    }
+    else if (window->KeyDown(VK_RIGHT))
+    {
+        state = RIGHT_W;
+        Translate(speed * gameTime, 0);
+    }
+    else if (window->KeyUp(VK_RIGHT) && window->KeyUp(VK_LEFT) || window->KeyDown(VK_RIGHT) && window->KeyDown(VK_LEFT))
     {
         switch (state)
         {
@@ -151,8 +161,6 @@ void Player::Update()
     else if (y - tileset->TileHeight() / 2.0f < 0)
         direction = DOWN;
 
-    
-
     // controla a gravidade do personagem
     if (direction == UP)
     {
@@ -165,7 +173,7 @@ void Player::Update()
         {
             direction = DOWN;
         }
-    } 
+    }
     else if (direction == DOWN)
     {
         if (state == RIGHT_W || state == RIGHT_S)
@@ -175,10 +183,10 @@ void Player::Update()
 
         if (speed < maxSpeed)
             speed += gravit;
-        
+
         Translate(0, speed * gameTime);
     }
-        
+
     // atualiza animação
     anim->Select(state);
     anim->NextFrame();
