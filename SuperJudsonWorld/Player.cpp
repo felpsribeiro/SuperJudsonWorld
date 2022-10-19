@@ -181,13 +181,15 @@ void Player::Update()
     }
     else if (direction == DOWN)
     {
-        if (state == RIGHT_W || state == RIGHT_S)
-            state = RIGHT_J;
-        if (state == LEFT_W || state == LEFT_S)
-            state = LEFT_J;
-
         if (speed < maxSpeed)
+        {
+            if (state == RIGHT_W || state == RIGHT_S)
+                state = RIGHT_J;
+            if (state == LEFT_W || state == LEFT_S)
+                state = LEFT_J;
+
             speed += gravit;
+        }
 
         Translate(0, speed * gameTime);
     }
