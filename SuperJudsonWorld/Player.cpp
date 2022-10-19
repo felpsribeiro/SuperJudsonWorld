@@ -100,7 +100,12 @@ void Player::OnCollision(Object * obj)
             if (player->Top() < platform->Top())
             {
                 // mant�m personagem em cima da plataforma
-                MoveTo(X(), plat->Y() - (tileset->TileHeight() / 2) - 15.0f);
+                if(obj->Type() == PLAT_RED) 
+                    MoveTo(X(), plat->Y() - (tileset->TileHeight() / 2) - 15.0f);
+                else {
+                    direction = DOWN;
+                    MoveTo(X(), plat->Y() - (tileset->TileHeight() / 2) - 25.0f);
+                }
                 speed = maxSpeed;
             }
             else

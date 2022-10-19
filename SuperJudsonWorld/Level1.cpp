@@ -25,6 +25,7 @@ uint Level1::collectedCoins = 0;
 
 void Level1::Init()
 {
+    SuperJudsonWorld::player->Reset();
     SuperJudsonWorld::n_level = 1;
     SuperJudsonWorld::pontos = 0;
     SuperJudsonWorld::hud->ResetTime();
@@ -39,9 +40,7 @@ void Level1::Init()
 
     // adiciona jogador na cena
     scene->Add(SuperJudsonWorld::player, MOVING);
-    
-    collectedCoins = 0;
-
+   
     Platform* plat;
     Enemy* en;
     float posX, posY;
@@ -102,6 +101,7 @@ void Level1::Update()
         window->Close();
 
     if (window->KeyPress('N') || collectedCoins == 3) {
+        collectedCoins = 0;
         SuperJudsonWorld::audio->Stop(MUSIC1);
         SuperJudsonWorld::hud->Stop();
         SuperJudsonWorld::NextLevel<Transition>();

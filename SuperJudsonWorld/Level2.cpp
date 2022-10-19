@@ -98,7 +98,8 @@ void Level2::Update()
     if (window->KeyPress(VK_ESCAPE))
         window->Close();
 
-    if (window->KeyPress('N')) {
+    if (window->KeyPress('N') || collectedCoins == 3) {
+        collectedCoins = 0;
         SuperJudsonWorld::audio->Stop(MUSIC2);
         SuperJudsonWorld::pontos += 500;
         SuperJudsonWorld::NextLevel<Transition>();
