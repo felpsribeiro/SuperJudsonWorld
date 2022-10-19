@@ -44,10 +44,10 @@ public:
 // Fun��o Membro Inline
 
 inline float Player::Bottom()
-{ return y + tileset->Height()/2; }
+{ return y + tileset->TileHeight()/2; }
 
 inline float Player::Top()
-{ return y - tileset->Height()/2; }
+{ return y - tileset->TileHeight()/2; }
 
 inline void Player::Draw()
 { anim->Draw(x, y, z); }

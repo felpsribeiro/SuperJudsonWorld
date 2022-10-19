@@ -149,10 +149,6 @@ void Player::Update()
         Translate(speed * gameTime, 0);
     }
 
-    // atualiza animação
-    anim->Select(state);
-    anim->NextFrame();
-
     // mantém personagem dentro da tela
     if (x + tileset->TileWidth() / 2.0f > window->Width())
         MoveTo(window->Width() - tileset->TileWidth() / 2.0f, y);
@@ -189,7 +185,16 @@ void Player::Update()
         Translate(0, speed * gameTime);
     }
     else if (vector == STOPPED)
-        speed = maxSpeed; 
+    {
+        speed = maxSpeed;
+
+        if (y < 432.0f)
+            vector == DOWN;
+    }
+
+    // atualiza animação
+    anim->Select(state);
+    anim->NextFrame();
 }
 
 // ---------------------------------------------------------------------------------
