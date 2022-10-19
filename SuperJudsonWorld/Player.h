@@ -28,6 +28,8 @@ private:
     Direction   vector = STOPPED;
 
 public:
+    uint level;
+
     Player();                           // construtor
     ~Player();                          // destrutor
 

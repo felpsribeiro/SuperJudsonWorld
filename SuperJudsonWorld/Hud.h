@@ -15,7 +15,8 @@ private:
     Timer     timer;
     stringstream text;
 
-    uint time = 0;
+    uint time;
+    bool stopped;
 
 public:
     Hud();
@@ -24,6 +25,7 @@ public:
     void Update();
     void Draw();
 
+    void Stop() { stopped = true; };
     void ResetTime();
     uint Time();
 };

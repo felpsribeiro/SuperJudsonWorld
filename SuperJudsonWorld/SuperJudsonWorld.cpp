@@ -21,7 +21,7 @@ void SuperJudsonWorld::Init()
 {
     // cria sistema de �udio
     audio = new Audio();
-    audio->Add(MENU, "Resources/Home.wav");
+    audio->Add(HOME, "Resources/Home.wav");
     audio->Add(MUSIC1, "Resources/Fase1.wav");
     audio->Add(MUSIC2, "Resources/Fase2.wav");
     audio->Add(TRANSITION, "Resources/Transition.wav");

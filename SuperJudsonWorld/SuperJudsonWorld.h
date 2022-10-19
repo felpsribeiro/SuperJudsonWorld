@@ -11,7 +11,7 @@
 
 // ------------------------------------------------------------------------------
 
-enum Sounds {MENU, MUSIC1, MUSIC2, GAMEOVER, TRANSITION};
+enum Sounds { HOME, MUSIC1, MUSIC2, GAMEOVER, TRANSITION};
 
 enum Objects {ENEMY1, ENEMY2, COIN, PLAT_RED, PLAT_GRAY};
 
@@ -26,11 +26,8 @@ public:
     static Player * player;         // jogador 
     static Audio * audio;           // sistema de �udio
     static bool viewBBox;           // estado da bounding box
-
     static Hud * hud;
-
     static float pontos;
-
     static int n_level;
     static bool lost;
 

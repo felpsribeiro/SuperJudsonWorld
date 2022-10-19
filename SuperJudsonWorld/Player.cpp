@@ -53,6 +53,7 @@ void Player::Reset()
 {
     // volta ao estado inicial
     MoveTo(49.0f, 432.0f, Layer::FRONT);
+    anim->Select(RIGHT_S);
 }
 
 
@@ -63,10 +64,17 @@ void Player::OnCollision(Object * obj)
     Rect* player = (Rect*)BBox();
 
     if (obj->Type() == COIN) {
-        if (SuperJudsonWorld::n_level == 1) 
+        if (SuperJudsonWorld::n_level == 1)
+        {
+            Level1::collectedCoins += 1;
             Level1::scene->Delete(obj, STATIC);
-        else if (SuperJudsonWorld::n_level == 2) 
+        }
+            
+        else if (SuperJudsonWorld::n_level == 2)
+        {
+            Level2::collectedCoins += 1;
             Level2::scene->Delete(obj, STATIC);
+        }    
         SuperJudsonWorld::pontos += 250;
     }
     else if (obj->Type() == ENEMY1 || obj->Type() == ENEMY2) {
@@ -189,7 +197,7 @@ void Player::Update()
         speed = maxSpeed;
 
         if (y < 432.0f)
-            vector == DOWN;
+            vector = DOWN;
     }
 
     // atualiza animação
