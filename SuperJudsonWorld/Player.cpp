@@ -82,13 +82,19 @@ void Player::OnCollision(Object * obj)
             SuperJudsonWorld::lost = true;
         }
     }
-    else if (obj->Type() == PLAT_RED || obj->Type() == PLAT_GRAY) {
+    else if (obj->Type() == PLAT_GRAY || obj->Type() == PLAT_RED) {
         Platform* plat = (Platform*)obj;
         Rect* platform = (Rect*)obj->BBox();
 
-        if (player->Left() < platform->Right() && player->Right() > platform->Left() && player->Top() < platform->Top())
-            // mant�m personagem em cima da plataforma
-            MoveTo(X(), plat->Y() - (plat->Height() * 0.25f) / 2);
+        if (player->Left() + (tileset->TileWidth() * 2 / 3) > platform->Left() && (player->Right() - (tileset->TileWidth() * 2 / 3)) < platform->Right())
+            
+            if (player->Top() < platform->Top())
+                // mant�m personagem em cima da plataforma
+                MoveTo(X(), plat->Y() - (tileset->TileHeight() / 2) - 15.0f);
+            else
+                //materializa a plataforma como barreira vertical
+                direction = DOWN;
+     
     }
 }
 
@@ -96,7 +102,7 @@ void Player::OnCollision(Object * obj)
 
 void Player::Update()
 {
-    if (window->KeyPress(VK_SPACE) && direction == STOP)
+    if (window->KeyPress(VK_SPACE) && (direction == STOP || direction == DOWN))
     {
         direction = UP;
     }
@@ -138,9 +144,15 @@ void Player::Update()
     // mantém personagem dentro da tela
     if (x + tileset->TileWidth() / 2.0f > window->Width())
         MoveTo(window->Width() - tileset->TileWidth() / 2.0f, y);
-
-    if (x - tileset->TileWidth() / 2.0f < 0)
+    else if (x - tileset->TileWidth() / 2.0f < 0)
         MoveTo(tileset->TileWidth() / 2.0f, y);
+
+    if (y > 432.0f) {
+        MoveTo(x, 432.0f);
+        direction = STOP;
+    }
+    else if (y - tileset->TileHeight() / 2.0f < 0)
+        direction = DOWN;
 
     // controla a gravidade do personagem
     if (direction == UP)
@@ -162,11 +174,11 @@ void Player::Update()
     }
 
     // APAGAR DEPOIS
-    if (y - tileset->TileHeight() / 2.0f > 432.0f)
+    /*if (y - tileset->TileHeight() / 2.0f > 432.0f)
     {
         MoveTo(x, 432.0f);
         direction = STOP;
-    }
+    }*/
         
 }
 
