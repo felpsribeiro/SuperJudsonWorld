@@ -26,6 +26,8 @@ uint Level1::collectedCoins = 0;
 void Level1::Init()
 {
     SuperJudsonWorld::n_level = 1;
+    SuperJudsonWorld::pontos = 0;
+    SuperJudsonWorld::hud->ResetTime();
 
     // cria gerenciador de cena
     scene = new Scene();
@@ -93,41 +95,22 @@ void Level1::Init()
 
 void Level1::Update()
 {
+    scene->Update();
+    scene->CollisionDetection();
+
     if (window->KeyPress(VK_ESCAPE))
         window->Close();
 
-    if (window->KeyPress('N')) {
+    if (window->KeyPress('N') || collectedCoins == 3) {
         SuperJudsonWorld::audio->Stop(MUSIC1);
+        SuperJudsonWorld::hud->Stop();
         SuperJudsonWorld::NextLevel<Transition>();
-        SuperJudsonWorld::pontos += 500;
     }
 
-    //else if (SuperJudsonWorld::player->Bottom() < 0 || SuperJudsonWorld::player->Top() > window->Height())
-    //{
-    //    SuperJudsonWorld::audio->Stop(MUSIC);
-    //    SuperJudsonWorld::NextLevel<GameOver>();
-    //    SuperJudsonWorld::player->Reset();
-    //}
-    //else if (SuperJudsonWorld::player->Level() == 1 || window->KeyPress('N'))
-    //{
-    //    //SuperJudsonWorld::NextLevel<Level2>();
-    //}
-    else
-    {
-        scene->Update();
-        scene->CollisionDetection();
-        
-        if (collectedCoins == 3)
-        {
-            SuperJudsonWorld::audio->Stop(MUSIC1);
-            SuperJudsonWorld::NextLevel<Transition>();
-        }
-
-        if (SuperJudsonWorld::hud->Time() == 0 || SuperJudsonWorld::lost) {          
-            SuperJudsonWorld::audio->Stop(MUSIC1);
-            SuperJudsonWorld::NextLevel<GameOver>();
-        }
-    }    
+    if (SuperJudsonWorld::hud->Time() == 0 || SuperJudsonWorld::lost) {          
+        SuperJudsonWorld::audio->Stop(MUSIC1);
+        SuperJudsonWorld::NextLevel<GameOver>();
+    }
 }
 
 // ------------------------------------------------------------------------------

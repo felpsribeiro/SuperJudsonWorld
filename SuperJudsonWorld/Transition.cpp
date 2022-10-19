@@ -8,8 +8,11 @@
 
 void Transition::Init()
 {
-    backg = new Sprite("Resources/fundo.png");
-    menu = new Sprite("Resources/pontuacao.png");
+    backg = new Sprite("Resources/transicao.png");
+
+    fonte = new Font("Resources/Agency30.png");
+    fonte->Spacing("Resources/Agency30.dat");
+    
 
     if (SuperJudsonWorld::n_level == 1)
     {
@@ -20,7 +23,7 @@ void Transition::Init()
         tileset = new TileSet("Resources/planet_2.png", 100, 100, 15, 15);
     }
 
-    anim = new Animation(tileset, 0.180f, true);
+    anim = new Animation(tileset, 0.120f, true);
 
     SuperJudsonWorld::audio->Play(TRANSITION, true);
     
@@ -41,7 +44,7 @@ void Transition::Update()
 
         if (SuperJudsonWorld::n_level == 1)
             SuperJudsonWorld::NextLevel<Level2>();
-        if (SuperJudsonWorld::n_level == 2)
+        else if (SuperJudsonWorld::n_level == 2)
             SuperJudsonWorld::NextLevel<Home>();
     }
     else
@@ -52,8 +55,14 @@ void Transition::Update()
 
 void Transition::Draw()
 {
+    text << "Pontuação: " << SuperJudsonWorld::pontos;
+    fonte->Draw(window->CenterX() - 40.0f, window->CenterY() - 50.0f, text.str());
+    text.str("");
+    text << "Tempo: " << 100 - SuperJudsonWorld::hud->Time() << '\n';
+    fonte->Draw(window->CenterX() - 20.0f, window->CenterY() - 25.0f, text.str());
+    text.str("");
+
     backg->Draw(window->CenterX(), window->CenterY(), Layer::BACK);
-    menu->Draw(window->CenterX(), window->CenterY(), Layer::BACK);
     anim->Draw(window->CenterX(), window->CenterY() + 55.0f);
 }
 
@@ -62,9 +71,9 @@ void Transition::Draw()
 void Transition::Finalize()
 {
     delete backg;
-    delete menu;
     delete anim;
     delete tileset;
+    delete fonte;
 }
 
 // ------------------------------------------------------------------------------

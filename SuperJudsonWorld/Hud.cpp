@@ -1,7 +1,8 @@
 #include "Hud.h"
 #include "SuperJudsonWorld.h"
 
-Hud::Hud() {
+Hud::Hud()
+{
 	fonte = new Font("Resources/Agency30.png");
 	fonte->Spacing("Resources/Agency30.dat");
 
@@ -10,12 +11,14 @@ Hud::Hud() {
 	timer.Start();
 }
 
-Hud::~Hud() {
+Hud::~Hud()
+{
 	delete fonte;
 }
 
-void Hud::Update() {
-	if (timer.Elapsed() > 1.0f) {
+void Hud::Update()
+{
+	if (!stopped && timer.Elapsed() > 1.0f) {
 		time--;
 		timer.Reset();
 
@@ -48,10 +51,13 @@ void Hud::Draw() {
 	fonte->Draw(60.0f, 60.0f, text.str());
 }
 
-void Hud::ResetTime() {
+void Hud::ResetTime()
+{
+	stopped = false;
+	timer.Start();
 	time = 100;
 }
 
-uint Hud::Time() {
+uint Hud::Time(){
 	return time;
 }

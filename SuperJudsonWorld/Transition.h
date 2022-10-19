@@ -8,6 +8,8 @@
 #include "Sprite.h"
 #include "TileSet.h"
 #include "Animation.h"
+#include <sstream>
+using std::stringstream;
 
 // ------------------------------------------------------------------------------
 
@@ -15,9 +17,10 @@ class Transition : public Game
 {
 private:
     Sprite* backg = nullptr;       // pano de fundo
-    Sprite* menu = nullptr;
     TileSet* tileset = nullptr;    // tileset da animação
     Animation* anim = nullptr;     // animação do planeta
+    Font* fonte;
+    stringstream text;
 
 public:
     void Init();                    // inicia nível
