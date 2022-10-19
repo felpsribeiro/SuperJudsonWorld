@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 
 enum State { LEFT_W, LEFT_J, LEFT_S, RIGHT_W, RIGHT_J, RIGHT_S };
-enum Direction { UP, DOWN, STOP };
+enum Direction { UP, DOWN };
 
 // ---------------------------------------------------------------------------------
 
@@ -21,9 +21,10 @@ private:
     TileSet   * tileset;                // folha de sprites do personagem
     Animation * anim;                   // anima��o do personagem
     State       state = RIGHT_S;
-    float       speed = 300.0f;
-    const float gravit = 0.5f;
-    uint        direction = STOP;
+    float       maxSpeed = 200.0f;
+    float       speed = maxSpeed;
+    const float gravit = 0.1f;
+    uint        direction = DOWN;
 
 public:
     Player();                           // construtor

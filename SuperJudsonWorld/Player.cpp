@@ -13,7 +13,7 @@ Player::Player()
 
     // sequ�ncias de anima��o do player
     uint walkerLeft[2]  = { 0, 1 };
-    uint jumpLeft[2]    = { 0, 3 };
+    uint jumpLeft[2]    = { 0, 2 };
     uint stillLeft[1]   = { 0 };
     uint walkerRight[2] = { 3, 4 };
     uint jumpRight[2]   = { 3, 5 };
@@ -86,11 +86,14 @@ void Player::OnCollision(Object * obj)
         Platform* plat = (Platform*)obj;
         Rect* platform = (Rect*)obj->BBox();
 
-        if (player->Left() + (tileset->TileWidth() * 2 / 3) > platform->Left() && (player->Right() - (tileset->TileWidth() * 2 / 3)) < platform->Right())
+        if (player->Left() + (tileset->TileWidth() * 2 / 4) > platform->Left() && (player->Right() - (tileset->TileWidth() * 2 / 4)) < platform->Right())
             
             if (player->Top() < platform->Top())
+            {
                 // mant�m personagem em cima da plataforma
                 MoveTo(X(), plat->Y() - (tileset->TileHeight() / 2) - 15.0f);
+                speed = maxSpeed;
+            }
             else
                 //materializa a plataforma como barreira vertical
                 direction = DOWN;
@@ -102,7 +105,7 @@ void Player::OnCollision(Object * obj)
 
 void Player::Update()
 {
-    if (window->KeyPress(VK_SPACE) && (direction == STOP || direction == DOWN))
+    if (window->KeyPress(VK_SPACE) && direction == DOWN)
     {
         direction = UP;
     }
@@ -137,10 +140,6 @@ void Player::Update()
         }
     }
 
-    // atualiza animação
-    anim->Select(state);
-    anim->NextFrame();
-
     // mantém personagem dentro da tela
     if (x + tileset->TileWidth() / 2.0f > window->Width())
         MoveTo(window->Width() - tileset->TileWidth() / 2.0f, y);
@@ -149,7 +148,6 @@ void Player::Update()
 
     if (y > 432.0f) {
         MoveTo(x, 432.0f);
-        direction = STOP;
     }
     else if (y - tileset->TileHeight() / 2.0f < 0)
         direction = DOWN;
@@ -169,17 +167,20 @@ void Player::Update()
     } 
     else if (direction == DOWN)
     {
-        speed += gravit;
+        if (state == RIGHT_W || state == RIGHT_S)
+            state = RIGHT_J;
+        if (state == LEFT_W || state == LEFT_S)
+            state = LEFT_J;
+
+        if (speed < maxSpeed)
+            speed += gravit;
+        
         Translate(0, speed * gameTime);
     }
-
-    // APAGAR DEPOIS
-    /*if (y - tileset->TileHeight() / 2.0f > 432.0f)
-    {
-        MoveTo(x, 432.0f);
-        direction = STOP;
-    }*/
         
+    // atualiza animação
+    anim->Select(state);
+    anim->NextFrame();
 }
 
 // ---------------------------------------------------------------------------------
