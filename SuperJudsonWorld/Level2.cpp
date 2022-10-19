@@ -37,6 +37,8 @@ void Level2::Init()
     SuperJudsonWorld::player->Reset();
     scene->Add(SuperJudsonWorld::player, MOVING);
 
+    SuperJudsonWorld::audio->Play(MUSIC2, true);
+
     Platform* plat;
     Enemy2* en;
     float posX, posY;
@@ -101,7 +103,7 @@ void Level2::Update()
 {
     if (window->KeyPress(VK_ESCAPE))
     {
-        SuperJudsonWorld::audio->Stop(MUSIC);
+        SuperJudsonWorld::audio->Stop(MUSIC2);
         SuperJudsonWorld::NextLevel<Home>();
         SuperJudsonWorld::player->Reset();
         SuperJudsonWorld::pontos = 0;
@@ -122,7 +124,7 @@ void Level2::Update()
         scene->CollisionDetection();
 
         if (SuperJudsonWorld::hud->Time() == 0) {
-            SuperJudsonWorld::audio->Stop(MUSIC);
+            SuperJudsonWorld::audio->Stop(MUSIC2);
             SuperJudsonWorld::player->Reset();
             SuperJudsonWorld::NextLevel<GameOver>();
         }

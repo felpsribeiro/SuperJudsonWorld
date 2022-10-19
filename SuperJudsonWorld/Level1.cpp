@@ -32,6 +32,7 @@ void Level1::Init()
     backg = new Background("Resources/Level1.png");
     scene->Add(backg, STATIC);
 
+    SuperJudsonWorld::audio->Play(MUSIC1, true);
 
     // adiciona jogador na cena
     scene->Add(SuperJudsonWorld::player, MOVING);
@@ -110,6 +111,7 @@ void Level1::Update()
 
     if (window->KeyPress('N')) {
         SuperJudsonWorld::n_level = 2;
+        SuperJudsonWorld::audio->Stop(MUSIC1);
         SuperJudsonWorld::NextLevel<Level2>();
         SuperJudsonWorld::pontos += 500;
     }
@@ -134,7 +136,7 @@ void Level1::Update()
             if (SuperJudsonWorld::lost)
                 SuperJudsonWorld::lost = false;
           
-            SuperJudsonWorld::audio->Stop(MUSIC);
+            SuperJudsonWorld::audio->Stop(MUSIC1);
             SuperJudsonWorld::player->Reset();
             SuperJudsonWorld::NextLevel<GameOver>();
         }

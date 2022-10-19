@@ -11,7 +11,7 @@
 
 // ------------------------------------------------------------------------------
 
-enum Sounds {MENU, MUSIC, TRANSITION};
+enum Sounds {MENU, MUSIC1, MUSIC2, GAMEOVER, TRANSITION};
 
 enum Objects {ENEMY1, ENEMY2, COIN, PLAT_RED, PLAT_GRAY};
 
