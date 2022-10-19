@@ -116,6 +116,7 @@ void Level2::Update()
         }
 
         if (SuperJudsonWorld::hud->Time() == 0 || SuperJudsonWorld::lost) {
+            SuperJudsonWorld::lost = false;
             SuperJudsonWorld::audio->Stop(MUSIC2);
             SuperJudsonWorld::NextLevel<GameOver>();
         }

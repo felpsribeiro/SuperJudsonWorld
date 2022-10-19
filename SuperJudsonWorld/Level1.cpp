@@ -107,7 +107,8 @@ void Level1::Update()
         SuperJudsonWorld::NextLevel<Transition>();
     }
 
-    if (SuperJudsonWorld::hud->Time() == 0 || SuperJudsonWorld::lost) {          
+    if (SuperJudsonWorld::hud->Time() == 0 || SuperJudsonWorld::lost) {   
+        SuperJudsonWorld::lost = false;
         SuperJudsonWorld::audio->Stop(MUSIC1);
         SuperJudsonWorld::NextLevel<GameOver>();
     }
