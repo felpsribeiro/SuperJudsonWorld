@@ -162,6 +162,7 @@
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="Heart.cpp" />
     <ClCompile Include="Hud.cpp" />
     <ClCompile Include="SuperJudsonWorld.cpp" />
     <ClCompile Include="Home.cpp" />
@@ -184,6 +185,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Audio.h" />
+    <ClInclude Include="Heart.h" />
     <ClInclude Include="Scenery.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Enemy.h" />

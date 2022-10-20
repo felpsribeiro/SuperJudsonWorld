@@ -4,6 +4,7 @@
 #include "Font.h"
 #include "Object.h"
 #include "Timer.h"
+#include "Heart.h"
 #include <sstream>
 
 using std::stringstream;
@@ -13,6 +14,7 @@ class Hud : public Object
 private:
     Font    * fonte;
     Timer     timer;
+    Heart * heart[5];
     stringstream text;
 
     uint time;

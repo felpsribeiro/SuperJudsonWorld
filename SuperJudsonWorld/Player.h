@@ -28,6 +28,7 @@ private:
 
 public:
     uint level;
+    uint vida = 5;
 
     Player();                           // construtor
     ~Player();                          // destrutor

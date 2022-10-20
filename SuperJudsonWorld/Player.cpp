@@ -90,7 +90,12 @@ void Player::OnCollision(Object * obj)
             direction = UP;
         }
         else {
-            SuperJudsonWorld::lost = true;
+            if (vida > 1) {
+                vida--;
+                Reset();
+            }
+            else
+                SuperJudsonWorld::lost = true;
         }
     }
     else if (obj->Type() == PLAT_GRAY || obj->Type() == PLAT_RED) {

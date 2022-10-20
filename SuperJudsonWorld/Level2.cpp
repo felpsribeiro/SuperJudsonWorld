@@ -25,7 +25,6 @@ uint Level2::collectedCoins = 0;
 void Level2::Init()
 {
     SuperJudsonWorld::n_level = 2;
-    SuperJudsonWorld::pontos = 0;
     SuperJudsonWorld::hud->ResetTime();
 
     scene = new Scene();
@@ -101,6 +100,7 @@ void Level2::Update()
     if (window->KeyPress('N') || collectedCoins == 3) {
         collectedCoins = 0;
         SuperJudsonWorld::audio->Stop(MUSIC2);
+        SuperJudsonWorld::hud->Stop();
         SuperJudsonWorld::pontos += 500;
         SuperJudsonWorld::NextLevel<Transition>();
     }

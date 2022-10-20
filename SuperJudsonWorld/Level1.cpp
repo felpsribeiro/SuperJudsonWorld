@@ -103,6 +103,7 @@ void Level1::Update()
     if (window->KeyPress('N') || collectedCoins == 3) {
         collectedCoins = 0;
         SuperJudsonWorld::audio->Stop(MUSIC1);
+        SuperJudsonWorld::pontos += 350;
         SuperJudsonWorld::hud->Stop();
         SuperJudsonWorld::NextLevel<Transition>();
     }

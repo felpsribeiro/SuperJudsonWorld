@@ -9,11 +9,20 @@ Hud::Hud()
 	time = 100;
 
 	timer.Start();
+	float delta = 24.0f;
+	float init = -48.0f;
+	for (int i = 0; i < 5; i++) {
+		heart[i] = new Heart(window->CenterX() + init , 47);
+		init += delta;
+	}
+
 }
 
 Hud::~Hud()
 {
 	delete fonte;
+	for(int i = 0; i < 5; i++)
+		delete heart[i];
 }
 
 void Hud::Update()
@@ -39,6 +48,13 @@ void Hud::Draw() {
 	text.fill('0');
 	text << time;
 	fonte->Draw(window->Width() - 35.0f, 60.0f, text.str());
+
+	text.str("");
+	text << "Vidas";
+	fonte->Draw(window->CenterX(), 30.0f, text.str());
+
+	for (int i = 0; i < SuperJudsonWorld::player->vida; i++)
+		heart[i]->Draw();
 
 	text.str("");
 	text << "Pontuação";
