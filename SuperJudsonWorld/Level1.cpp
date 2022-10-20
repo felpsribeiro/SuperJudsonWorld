@@ -19,7 +19,6 @@ using std::string;
 // Inicializa membros est�ticos da classe
 
 Scene * Level1::scene = nullptr;
-uint Level1::collectedCoins = 0;
 
 // ------------------------------------------------------------------------------
 
@@ -100,8 +99,7 @@ void Level1::Update()
     if (window->KeyPress(VK_ESCAPE))
         window->Close();
 
-    if (window->KeyPress('N') || collectedCoins == 3) {
-        collectedCoins = 0;
+    if (window->KeyPress('N') || SuperJudsonWorld::player->collectedCoins == 3) {
         SuperJudsonWorld::audio->Stop(MUSIC1);
         SuperJudsonWorld::hud->Stop();
         SuperJudsonWorld::NextLevel<Transition>();

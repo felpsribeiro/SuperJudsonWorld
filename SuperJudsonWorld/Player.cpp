@@ -36,6 +36,7 @@ Player::Player()
     // posição inicial
     MoveTo(49.0f, 432.0f, Layer::FRONT);
     anim->Select(RIGHT_S);
+    collectedCoins = 0;
 }
 
 // ---------------------------------------------------------------------------------
@@ -51,7 +52,9 @@ Player::~Player()
 void Player::Reset()
 {
     // volta ao estado inicial
+    state = RIGHT_S;
     MoveTo(49.0f, 432.0f, Layer::FRONT);
+    collectedCoins = 0;
 }
 
 
@@ -63,17 +66,13 @@ void Player::OnCollision(Object * obj)
 
     if (obj->Type() == COIN) {
         if (SuperJudsonWorld::n_level == 1)
-        {
-            Level1::collectedCoins += 1;
             Level1::scene->Delete(obj, STATIC);
-        }
             
         else if (SuperJudsonWorld::n_level == 2)
-        {
-            Level2::collectedCoins += 1;
             Level2::scene->Delete(obj, STATIC);
-        }    
+
         SuperJudsonWorld::pontos += 250;
+        collectedCoins += 1;
     }
     else if (obj->Type() == ENEMY1 || obj->Type() == ENEMY2) {
         //pulo - mata o inimigo

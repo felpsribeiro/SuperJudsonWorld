@@ -28,6 +28,7 @@ private:
 
 public:
     uint level;
+    uint collectedCoins;
 
     Player();                           // construtor
     ~Player();                          // destrutor

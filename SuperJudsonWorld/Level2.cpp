@@ -18,12 +18,12 @@ using std::string;
 // Inicializa membros est�ticos da classe
 
 Scene* Level2::scene = nullptr;
-uint Level2::collectedCoins = 0;
 
 // ------------------------------------------------------------------------------
 
 void Level2::Init()
 {
+    SuperJudsonWorld::player->Reset();
     SuperJudsonWorld::n_level = 2;
     SuperJudsonWorld::pontos = 0;
     SuperJudsonWorld::hud->ResetTime();
@@ -95,32 +95,22 @@ void Level2::Init()
 
 void Level2::Update()
 {
+    scene->Update();
+    scene->CollisionDetection();
+
     if (window->KeyPress(VK_ESCAPE))
         window->Close();
 
-    if (window->KeyPress('N') || collectedCoins == 3) {
-        collectedCoins = 0;
+    if (window->KeyPress('N') || SuperJudsonWorld::player->collectedCoins == 8) {
         SuperJudsonWorld::audio->Stop(MUSIC2);
-        SuperJudsonWorld::pontos += 500;
+        SuperJudsonWorld::hud->Stop();
         SuperJudsonWorld::NextLevel<Transition>();
     }
 
-    else
-    {
-        scene->Update();
-        scene->CollisionDetection();
-
-        if (collectedCoins == 2)
-        {
-            SuperJudsonWorld::audio->Stop(MUSIC2);
-            SuperJudsonWorld::NextLevel<Transition>();
-        }
-
-        if (SuperJudsonWorld::hud->Time() == 0 || SuperJudsonWorld::lost) {
-            SuperJudsonWorld::lost = false;
-            SuperJudsonWorld::audio->Stop(MUSIC2);
-            SuperJudsonWorld::NextLevel<GameOver>();
-        }
+    if (SuperJudsonWorld::hud->Time() == 0 || SuperJudsonWorld::lost) {
+        SuperJudsonWorld::lost = false;
+        SuperJudsonWorld::audio->Stop(MUSIC2);
+        SuperJudsonWorld::NextLevel<GameOver>();
     }
 }
 
