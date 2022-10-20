@@ -17,7 +17,6 @@ private:
 
 public:
     static Scene* scene;           // cena do n�vel
-    static uint collectedCoins;
 
     void Init();                    // inicializa��o do n�vel
     void Update();                  // atualiza l�gica do jogo
