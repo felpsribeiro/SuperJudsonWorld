@@ -10,7 +10,7 @@ Hud::Hud()
 
 	timer.Start();
 	float delta = 24.0f;
-	float init = -48.0f;
+	float init = 0.0f;
 	for (int i = 0; i < 5; i++) {
 		heart[i] = new Heart(window->CenterX() + init , 47);
 		init += delta;
@@ -48,10 +48,6 @@ void Hud::Draw() {
 	text.fill('0');
 	text << time;
 	fonte->Draw(window->Width() - 35.0f, 60.0f, text.str());
-
-	text.str("");
-	text << "Vidas";
-	fonte->Draw(window->CenterX(), 30.0f, text.str());
 
 	for (int i = 0; i < SuperJudsonWorld::player->vida; i++)
 		heart[i]->Draw();
