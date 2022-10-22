@@ -55,6 +55,7 @@ void Player::Reset()
     state = RIGHT_S;
     MoveTo(49.0f, 432.0f, Layer::FRONT);
     collectedCoins = 0;
+
 }
 
 
@@ -128,6 +129,7 @@ void Player::Update()
     if (window->KeyPress(VK_SPACE) && direction == DOWN)
     {
         direction = UP;
+        speed = maxSpeed / 2;
     }
     else if (window->KeyDown(VK_LEFT))
     {

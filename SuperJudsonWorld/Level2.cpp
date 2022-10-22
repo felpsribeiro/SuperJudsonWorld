@@ -24,6 +24,8 @@ Scene* Level2::scene = nullptr;
 void Level2::Init()
 {
     SuperJudsonWorld::player->Reset();
+    SuperJudsonWorld::player->vida = 5;
+
     SuperJudsonWorld::n_level = 2;
     SuperJudsonWorld::hud->ResetTime();
 

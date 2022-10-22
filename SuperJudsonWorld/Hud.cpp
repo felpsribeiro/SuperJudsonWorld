@@ -10,7 +10,7 @@ Hud::Hud()
 
 	timer.Start();
 	float delta = 24.0f;
-	float init = 0.0f;
+	float init = -24.0f;
 	for (int i = 0; i < 5; i++) {
 		heart[i] = new Heart(window->CenterX() + init , 47);
 		init += delta;
